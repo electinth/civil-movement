@@ -2,11 +2,16 @@
 
 Civil movement in Thailand 2020
 
+## Deployment
+
+- Staging: https://electinth.github.io/civil-movement/
+- Production: Not deployed yet
+
+## Get started
+
 Starter template for [Routify](https://github.com/sveltech/routify).
 
-### Get started
-
-#### Starter templates
+### Starter templates
 
 | Template                                  | Description                                                 |
 | ----------------------------------------- | ----------------------------------------------------------- |
@@ -24,7 +29,7 @@ or
 
 The above commands will populate the current directory, they don't create a new one.
 
-### npm scripts
+## npm scripts
 
 | Syntax        | Description                                                               |
 | ------------- | ------------------------------------------------------------------------- |
@@ -36,7 +41,7 @@ The above commands will populate the current directory, they don't create a new 
 | `deploy:*`    | Deploy to netlify or now                                                  |
 | `export`      | Create static pages from content in dist folder (used by `npm run build`) |
 
-### SSR and pre-rendering
+## SSR and pre-rendering
 
 SSR and pre-rendering are included in the default build process.
 
@@ -50,13 +55,13 @@ Otherwise it will be rendered instantly.
 
 See [src/pages/example/api/[showId].svelte](https://github.com/sveltech/routify-starter/blob/master/src/pages/example/api/%5BshowId%5D.svelte) for an example.
 
-### Production
+## Production
 
 - For SPA or SSR apps please make sure that url rewrite is enabled on the server.
 - For SPA redirect to `__dynamic.html`.
 - For SSR redirect to the lambda function or express server.
 
-### Typescript
+## Typescript
 
 For Typescript, we recommend [@lamualfa](https://github.com/lamualfa) excellent [routify-ts](https://github.com/lamualfa/routify-ts/)
 
@@ -64,6 +69,6 @@ New project: `npx routify-ts init <project-name> [routify-init-args]`
 
 Existing project: `npx routify-ts convert [project-directory]`
 
-### Issues?
+## Issues?
 
 File on Github! See https://github.com/sveltech/routify/issues .

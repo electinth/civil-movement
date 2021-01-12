@@ -89,7 +89,10 @@ export default {
       transform: (code) => ({
         code: code
           .replace('process.env.NODE_ENV', `'${process.env.NODE_ENV}'`)
-          .replace('process.env.BASE_PATH', `'${process.env.BASE_PATH}'`),
+          .replace(
+            'process.env.BASE_PATH',
+            `'${process.env.BASE_PATH || '/'}'`
+          ),
         map: { mappings: '' },
       }),
     },
