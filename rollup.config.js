@@ -85,9 +85,11 @@ export default {
     !production && !isNollup && livereload(distDir), // refresh entire window when code is updated
     !production && isNollup && Hmr({ inMemory: true, public: assetsDir }), // refresh only updated code
     {
-      // provide node environment on the client
+      // provide environment on the client
       transform: (code) => ({
-        code: code.replace('process.env.NODE_ENV', `"${process.env.NODE_ENV}"`),
+        code: code
+          .replace('process.env.NODE_ENV', `'${process.env.NODE_ENV}'`)
+          .replace('process.env.BASE_PATH', `'${process.env.BASE_PATH}'`),
         map: { mappings: '' },
       }),
     },
