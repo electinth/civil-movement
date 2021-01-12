@@ -4,7 +4,9 @@
 </script>
 
 <style global>
-  @import '../assets/global.css';
+  @import 'tailwindcss/base';
+  @import 'tailwindcss/components';
+  @import 'tailwindcss/utilities';
 </style>
 
 <Router {routes} />

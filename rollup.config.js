@@ -9,13 +9,15 @@ import { copySync, removeSync } from 'fs-extra';
 import { spassr } from 'spassr';
 import getConfig from '@roxi/routify/lib/utils/config';
 import autoPreprocess from 'svelte-preprocess';
-import postcssImport from 'postcss-import';
 
 const { distDir } = getConfig(); // use Routify's distDir for SSOT
 const assetsDir = 'assets';
 const buildDir = `dist/build`;
 const isNollup = !!process.env.NOLLUP;
 const production = !process.env.ROLLUP_WATCH;
+
+// For tailwind
+process.env.NODE_ENV = production ? 'production' : 'development';
 
 // clear previous builds
 removeSync(distDir);
@@ -61,7 +63,7 @@ export default {
       hot: isNollup,
       preprocess: [
         autoPreprocess({
-          postcss: { plugins: [postcssImport()] },
+          postcss: require('./postcss.config.js'),
           defaults: { style: 'postcss' },
         }),
       ],
