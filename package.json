@@ -24,7 +24,7 @@
     "rollup": "rollup -cw",
     "nollup": "nollup -c",
     "routify": "routify",
-    "validate": "svelte-check",
+    "validate": "svelte-check --fail-on-warnings --fail-on-hints",
     "postinstall": "husky install",
     "precommit": "npm run validate && lint-staged"
   },
