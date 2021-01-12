@@ -1,28 +1,22 @@
-name: Deploy to Github Page
+name: Staging deployment
 
 on:
   push:
     branches: [main]
 
 jobs:
-  pipeline:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        uses: borales/actions-yarn@v2.0.0
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          cmd: install
-      - name: Build project
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: build
+          node-version: '12'
+      - run: yarn install
+      - run: yarn build
         env:
           BASE_PATH: /civil-movement
-          STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
-      - name: Deploy to Github Page
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
