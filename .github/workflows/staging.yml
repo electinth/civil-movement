@@ -13,10 +13,11 @@ jobs:
         with:
           node-version: '12'
       - run: yarn install
-      - run: yarn build
+      - run: yarn build:css
+      - run: yarn build:export --basepath civil-movement
         env:
-          BASE_PATH: /civil-movement
+          BASE_PATH: civil-movement
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./dist/civil-movement

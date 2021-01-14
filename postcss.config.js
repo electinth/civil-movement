@@ -1,11 +1,15 @@
-const production = !process.env.ROLLUP_WATCH;
+const tailwind = require('tailwindcss');
+const cssnano = require('cssnano');
+const postcssImport = require('postcss-import');
+const presetEnv = require('postcss-preset-env')({
+  features: {
+    'nesting-rules': true,
+  },
+});
 
-module.exports = {
-  plugins: [
-    require('tailwindcss'),
-    require('postcss-import'),
-    ...(production
-      ? [require('autoprefixer'), require('cssnano')({ preset: 'default' })]
-      : []),
-  ],
-};
+const plugins =
+  process.env.NODE_ENV === 'production'
+    ? [postcssImport, tailwind, presetEnv, cssnano]
+    : [postcssImport, tailwind, presetEnv];
+
+module.exports = { plugins };

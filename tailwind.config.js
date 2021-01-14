@@ -1,12 +1,17 @@
-const production = !process.env.ROLLUP_WATCH;
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   purge: {
-    content: ['./src/**/*.svelte'],
-    enabled: production,
+    mode: 'all',
+    content: ['./src/**/*.svelte', './src/**/*.html'],
   },
   darkMode: false,
   theme: {
+    fontFamily: {
+      heading: ['Kondolar Thai', ...defaultTheme.fontFamily.serif],
+      subtitle: ['Anuphan', ...defaultTheme.fontFamily.sans],
+      body: ['Bai Jamjuri', ...defaultTheme.fontFamily.sans],
+    },
     fontSize: {
       36: 36,
       24: 24,
