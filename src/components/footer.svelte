@@ -49,7 +49,7 @@
         <img
           src="images/logo-elect-footer.png"
           alt="ELECT"
-          class="w-24 md:w-32 lg:w-40 h-auto"
+          class="w-20 md:w-28 lg:w-32 h-auto"
         />
       </a>
     </div>

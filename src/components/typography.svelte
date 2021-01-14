@@ -20,11 +20,11 @@
       case 'subtitle2':
         return 'font-subtitle text-16 md:text-18';
       case 'subtitle3':
-        return 'font-subtitle text-12 md:text-14';
+        return 'font-subtitle text-14 md:text-16';
       case 'subtitle4':
-        return 'font-subtitle text-10 md:text-12';
+        return 'font-subtitle text-12 md:text-14';
       case 'subtitle5':
-        return 'font-subtitle text-10';
+        return 'font-subtitle text-10 md:text-12';
       case 'body1':
         return 'font-body text-15 md:text-17';
       case 'body2':
