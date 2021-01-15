@@ -17,6 +17,8 @@ What's this feature about
 
 Quick summary what's this feature about.
 
+Insert any visuals or diagrams if that helps.
+
 ### Why is it needed?
 
 A clear and concise description of what the problem is, if any.
@@ -28,3 +30,7 @@ A clear and concise description of what you want to happen, if any.
 ### Related issue/PR
 
 Put any issue/pull request that others should be aware of
+
+### Related Resources
+
+Put any links or references that others should know.
