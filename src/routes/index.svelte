@@ -15,13 +15,17 @@
 <div class="flex flex-col bg-mint">
   <div>
     {selectedOrganizers}
-    <FilterDropdown filter={ORGANIZERS} bind:activeFilter={selectedOrganizers}>
-      ทุกผู้ดำเนินการ
-    </FilterDropdown>
+    <FilterDropdown
+      filter={ORGANIZERS}
+      bind:activeFilter={selectedOrganizers}
+      selectedAllLabel="ทุกผู้ดำเนินการ"
+    />
     {selectedKeyTopics}
-    <FilterDropdown filter={KEY_TOPICS} bind:activeFilter={selectedKeyTopics}>
-      ทุกข้อเรียกร้อง
-    </FilterDropdown>
+    <FilterDropdown
+      filter={KEY_TOPICS}
+      bind:activeFilter={selectedKeyTopics}
+      selectedAllLabel="ทุกข้อเรียกร้อง"
+    />
   </div>
 
   <FlowerVisualization />

@@ -5,13 +5,18 @@
 
   export let filter: Filter[];
   export let activeFilter: string[];
+  export let selectedAllLabel: string;
 
   let isOpen = false;
 
   function toggleOption(optionKey: string): void {
     activeFilter = activeFilter.includes(optionKey)
-      ? activeFilter.filter((key) => key !== optionKey)
-      : [...activeFilter, optionKey];
+      ? activeFilter.length !== 1
+        ? activeFilter.filter((key) => key !== optionKey)
+        : activeFilter
+      : filter
+          .filter(({ key }) => activeFilter.includes(key) || key === optionKey)
+          .map(({ key }) => key);
   }
 </script>
 
@@ -21,7 +26,16 @@
     class={`flex flex-row px-2 py-1 space-x-2 rounded focus:outline-none ${
       isOpen ? 'bg-white' : 'hover:bg-white hover:bg-opacity-50'
     }`}>
-    <Typography as="subtitle4"><slot /></Typography>
+    <Typography as="subtitle4">
+      {#if activeFilter.length === filter.length}
+        {selectedAllLabel}
+      {:else}
+        {filter.find(({ key }) => key === activeFilter[0]).label}
+        {#if activeFilter.length > 1}
+          + {activeFilter.length - 1}
+        {/if}
+      {/if}
+    </Typography>
     <svg
       width="10"
       height="6"
