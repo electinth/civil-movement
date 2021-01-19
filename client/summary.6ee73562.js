@@ -1,1 +1,0 @@
-import{S as s,i as a,s as r,e,v as t,c,a as n,w as o,d as u,f as i,p as l,n as m}from"./client.cd070c07.js";function p(s){let a,r;return{c(){a=e("div"),r=t("summary page")},l(s){a=c(s,"DIV",{});var e=n(a);r=o(e,"summary page"),e.forEach(u)},m(s,e){i(s,a,e),l(a,r)},p:m,i:m,o:m,d(s){s&&u(a)}}}export default class extends s{constructor(s){super(),a(this,s,null,p,r,{})}}
