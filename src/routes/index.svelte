@@ -12,7 +12,10 @@
   <title>Civil Movement</title>
 </svelte:head>
 
-<div class="flex flex-col bg-mint">
+<div
+  class="flex flex-col h-screen"
+  style="background: linear-gradient(180deg, #A3FFF9 0%, #69FFBF 100%);"
+>
   <div class="mx-auto text-center mt-8">
     <Typography as="h1" bold>651 เหตุการณ์</Typography>
     <div class="flex space-x-2">

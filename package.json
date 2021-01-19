@@ -20,6 +20,7 @@
   "dependencies": {
     "compression": "^1.7.1",
     "d3": "^6.3.1",
+    "d3-force-sampled": "^1.0.0",
     "polka": "next",
     "sirv": "^1.0.0",
     "svelte-use-click-outside": "^1.0.0",
