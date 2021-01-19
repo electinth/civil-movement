@@ -13,6 +13,8 @@
   export let as: Heading | Subtitle | Body;
   export let bold = false;
 
+  $: extraClass = $$props.class || '';
+
   const getSubtitleOrBodyClasses = (as: Subtitle | Body) => {
     switch (as) {
       case 'subtitle1':
@@ -34,28 +36,43 @@
 </script>
 
 {#if as === 'h1'}
-  <h1 class="font-heading text-21 md:text-36" class:font-black={bold}>
+  <h1
+    class="font-heading text-21 md:text-36 {extraClass}"
+    class:font-black={bold}
+  >
     <slot />
   </h1>
 {:else if as === 'h2'}
-  <h2 class="font-heading text-18 md:text-24" class:font-black={bold}>
+  <h2
+    class="font-heading text-18 md:text-24 {extraClass}"
+    class:font-black={bold}
+  >
     <slot />
   </h2>
 {:else if as === 'h3'}
-  <h3 class="font-heading text-16 md:text-21" class:font-black={bold}>
+  <h3
+    class="font-heading text-16 md:text-21 {extraClass}"
+    class:font-black={bold}
+  >
     <slot />
   </h3>
 {:else if as === 'h4'}
-  <h4 class="font-heading text-14 md:text-18" class:font-black={bold}>
+  <h4
+    class="font-heading text-14 md:text-18 {extraClass}"
+    class:font-black={bold}
+  >
     <slot />
   </h4>
 {:else if as === 'h5'}
-  <h5 class="font-heading text-12 md:text-16" class:font-black={bold}>
+  <h5
+    class="font-heading text-12 md:text-16 {extraClass}"
+    class:font-black={bold}
+  >
     <slot />
   </h5>
 {:else}
   <p
-    class="font-subtitle {getSubtitleOrBodyClasses(as)}"
+    class="font-subtitle {getSubtitleOrBodyClasses(as)} {extraClass}"
     class:font-semibold={as.includes('subtitle') && bold}
     class:font-bold={as.includes('body') && bold}
   >
