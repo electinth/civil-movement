@@ -2,6 +2,7 @@
   import type { Filter } from '../../constants/filter';
   import Typography from '../typography.svelte';
   import FilterOption from './filter-option.svelte';
+  import { clickOutside } from 'svelte-use-click-outside';
 
   export let filter: Filter[];
   export let activeFilter: string[];
@@ -20,7 +21,7 @@
   }
 </script>
 
-<div>
+<div use:clickOutside={() => (isOpen = false)}>
   <button
     on:click={() => (isOpen = !isOpen)}
     class={`flex flex-row px-2 py-1 space-x-2 rounded focus:outline-none ${
