@@ -7,14 +7,13 @@
   export let filter: Filter[];
   export let activeFilter: string[];
   export let selectedAllLabel: string;
+  export let selectedNoneLabel: string;
 
   let isOpen = false;
 
   function toggleOption(optionKey: string): void {
     activeFilter = activeFilter.includes(optionKey)
-      ? activeFilter.length !== 1
-        ? activeFilter.filter((key) => key !== optionKey)
-        : activeFilter
+      ? activeFilter.filter((key) => key !== optionKey)
       : filter
           .filter(({ key }) => activeFilter.includes(key) || key === optionKey)
           .map(({ key }) => key);
@@ -30,6 +29,8 @@
     <Typography as="subtitle4">
       {#if activeFilter.length === filter.length}
         {selectedAllLabel}
+      {:else if activeFilter.length == 0}
+        {selectedNoneLabel}
       {:else}
         {filter.find(({ key }) => key === activeFilter[0]).label}
         {#if activeFilter.length > 1}

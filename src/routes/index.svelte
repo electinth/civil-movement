@@ -19,12 +19,14 @@
       filter={ORGANIZERS}
       bind:activeFilter={selectedOrganizers}
       selectedAllLabel="ทุกผู้ดำเนินการ"
+      selectedNoneLabel="เลือกอย่างน้อยหนึ่งข้อ"
     />
     {selectedKeyTopics}
     <FilterDropdown
       filter={KEY_TOPICS}
       bind:activeFilter={selectedKeyTopics}
       selectedAllLabel="ทุกข้อเรียกร้อง"
+      selectedNoneLabel="เลือกอย่างน้อยหนึ่งข้อ"
     />
   </div>
 
