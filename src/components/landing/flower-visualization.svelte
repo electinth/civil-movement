@@ -3,6 +3,8 @@
   import { plot } from '../../utils/flower-d3';
   import Typography from '../typography.svelte';
 
+  import movements from '../../assets/data/event_all.csv';
+
   interface NodeData {
     name: string;
     date: Date;
@@ -31,7 +33,9 @@
       day: 'numeric',
     });
 
-  onMount(() => plot(stage, onMouseOverNode, onMouseOutOfNode, onClickNode));
+  onMount(() =>
+    plot(movements, stage, onMouseOverNode, onMouseOutOfNode, onClickNode)
+  );
 </script>
 
 <div class="relative flex-1">

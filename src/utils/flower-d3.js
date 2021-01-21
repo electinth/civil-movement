@@ -7,6 +7,7 @@ const thai_date_from_string = (str) => {
 };
 
 export function plot(
+  data,
   stageElement,
   onMouseOverNode,
   onMouseOutOfNode,
@@ -102,174 +103,172 @@ export function plot(
   let node_sizes = {};
   const radius_from_id = (id) => Math.sqrt(node_sizes[id]);
 
-  d3.csv('data/event_all.csv').then((data) => {
-    let nodes = [];
-    let links = [];
-    let stems = [];
-    let stem_ids = [];
+  // PROCESS DATA
+  let nodes = [];
+  let links = [];
+  let stems = [];
+  let stem_ids = [];
 
-    data.sort(
-      (a, b) =>
-        thai_date_from_string(a.date).getMilliseconds() -
-        thai_date_from_string(b.date).getMilliseconds()
-    );
-    data.forEach((d, i) => {
-      let id = d.event_no.trim();
-      let date = thai_date_from_string(d.date);
+  data.sort(
+    (a, b) =>
+      thai_date_from_string(a.date).getMilliseconds() -
+      thai_date_from_string(b.date).getMilliseconds()
+  );
+  data.forEach((d, i) => {
+    let id = d.event_no.trim();
+    let date = thai_date_from_string(d.date);
 
-      let node = {
-        id: id,
-        date: date,
-        name: d.event_name,
-        type: +d.player,
-        x: d['x_' + mode]
-          ? ((+d['x_' + mode] - 50) * width) / 100
-          : time_x(date) + Math.random(),
-        y: d['y_' + mode]
-          ? ((50 - +d['y_' + mode]) * height) / 100
-          : +d.time_show === 2
-          ? height / 3
-          : Math.random(),
-      };
-      nodes.push(node);
-      node_sizes[id] = 1;
+    let node = {
+      id: id,
+      date: date,
+      name: d.event_name,
+      type: +d.player,
+      x: d['x_' + mode]
+        ? ((+d['x_' + mode] - 50) * width) / 100
+        : time_x(date) + Math.random(),
+      y: d['y_' + mode]
+        ? ((50 - +d['y_' + mode]) * height) / 100
+        : +d.time_show === 2
+        ? height / 3
+        : Math.random(),
+    };
+    nodes.push(node);
+    node_sizes[id] = 1;
 
-      if (d.pre_event != '') {
-        let pres = d.pre_event.split(',');
-        for (let pre of pres) {
-          pre = pre.trim();
-          links.push({ source: pre, target: id, type: +d.reaction_type });
-          node_sizes[pre]++;
-        }
+    if (d.pre_event != '') {
+      let pres = d.pre_event.split(',');
+      for (let pre of pres) {
+        pre = pre.trim();
+        links.push({ source: pre, target: id, type: +d.reaction_type });
+        node_sizes[pre]++;
       }
+    }
 
-      stems.push({
-        source: { x: time_x(date), y: height / 2 },
-        target: node,
-        type: +d.player,
-        shown: +d.time_show === 1 || +d.time_show === 2, // 1 for long line, 2 for short line
-      });
-      stem_ids.push(id);
+    stems.push({
+      source: { x: time_x(date), y: height / 2 },
+      target: node,
+      type: +d.player,
+      shown: +d.time_show === 1 || +d.time_show === 2, // 1 for long line, 2 for short line
     });
+    stem_ids.push(id);
+  });
 
-    const force_distance = (d) =>
-      (radius_from_id(d.source.id) + radius_from_id(d.target.id)) *
-        node_radius +
-      link_length;
-    const force_radius = (d) => (radius_from_id(d.id) + 1) * node_radius;
-    simulation = d3
-      .forceSimulation(nodes)
-      .force(
-        'link',
-        d3
-          .forceLink(links)
-          .id((d) => d.id)
-          .distance(link_length)
-          .distance(force_distance)
-          .strength(0.5)
-      )
-      .force('charge', d3ForceSampled.forceManyBodySampled().strength(-0.2))
-      .force('collide', d3.forceCollide().radius(force_radius).strength(0.2))
-      .tick(20);
+  const force_distance = (d) =>
+    (radius_from_id(d.source.id) + radius_from_id(d.target.id)) * node_radius +
+    link_length;
+  const force_radius = (d) => (radius_from_id(d.id) + 1) * node_radius;
+  simulation = d3
+    .forceSimulation(nodes)
+    .force(
+      'link',
+      d3
+        .forceLink(links)
+        .id((d) => d.id)
+        .distance(link_length)
+        .distance(force_distance)
+        .strength(0.5)
+    )
+    .force('charge', d3ForceSampled.forceManyBodySampled().strength(-0.2))
+    .force('collide', d3.forceCollide().radius(force_radius).strength(0.2))
+    .tick(20);
 
-    const link_stroke = (d) => color_reaction(d.type);
-    const link_marker = (d) =>
-      `url(${new URL(`#arrow-${d.type}`, location.toString())})`;
-    const link = svg
-      .append('g')
-      .selectAll('path')
-      .data(links)
-      .join('path')
-      .attr('fill', 'none')
-      .attr('stroke-width', node_radius / 4)
-      .attr('stroke', link_stroke)
-      .attr('marker-end', link_marker);
+  const link_stroke = (d) => color_reaction(d.type);
+  const link_marker = (d) =>
+    `url(${new URL(`#arrow-${d.type}`, location.toString())})`;
+  const link = svg
+    .append('g')
+    .selectAll('path')
+    .data(links)
+    .join('path')
+    .attr('fill', 'none')
+    .attr('stroke-width', node_radius / 4)
+    .attr('stroke', link_stroke)
+    .attr('marker-end', link_marker);
 
-    const node_color = (d) => color_player(d.type);
-    const stem_display = (d) => (d.shown ? 'unset' : 'none');
-    const stem = svg
-      .append('g')
-      .selectAll('path')
-      .data(stems)
-      .join('path')
-      .attr('fill', 'none')
-      .attr('stroke-width', node_radius / 4)
-      .attr('stroke', node_color)
-      .attr('display', stem_display);
+  const node_color = (d) => color_player(d.type);
+  const stem_display = (d) => (d.shown ? 'unset' : 'none');
+  const stem = svg
+    .append('g')
+    .selectAll('path')
+    .data(stems)
+    .join('path')
+    .attr('fill', 'none')
+    .attr('stroke-width', node_radius / 4)
+    .attr('stroke', node_color)
+    .attr('display', stem_display);
 
-    const link_stroke_muted = (d) => color_reaction_muted(d.type);
-    const link_marker_muted = (d) =>
-      `url(${new URL(`#arrow-${d.type}-muted`, location.toString())})`;
-    const node_color_muted = (d) => color_player_muted(d.type);
-    const mouseover = (event, d) => {
-      link
-        .attr('stroke', link_stroke_muted)
-        .attr('marker-end', link_marker_muted);
-      stem
-        .attr('stroke', node_color_muted)
-        .filter((dd) => dd.target.id === d.id)
-        .raise()
-        .attr('stroke', node_color)
-        .attr('display', 'unset');
-      node.attr('fill', node_color_muted);
-      d3.select(event.currentTarget).attr('fill', node_color);
-
-      onMouseOverNode(d);
-    };
-    const mouseout = (event, d) => {
-      if (!dragging) {
-        link.attr('stroke', link_stroke).attr('marker-end', link_marker);
-        stem.attr('stroke', node_color).attr('display', stem_display);
-        node.attr('fill', node_color);
-
-        onMouseOutOfNode(d);
-      }
-    };
-    const cx = (d) => bound_x(d.x);
-    const cy = (d) => bound_y(d.y);
-    const node = svg
-      .append('g')
-      .selectAll('circle')
-      .data(nodes)
-      .join('circle')
-      .classed('node', true)
-      .attr('fill', node_color)
-      .attr('cx', cx)
-      .attr('cy', cy)
-      .call(drag())
-      .on('mouseover', mouseover)
-      .on('mouseout', mouseout)
-      .on('click', (_, d) => onClickNode(d));
-
-    const delay = (d, i) => i * 15;
+  const link_stroke_muted = (d) => color_reaction_muted(d.type);
+  const link_marker_muted = (d) =>
+    `url(${new URL(`#arrow-${d.type}-muted`, location.toString())})`;
+  const node_color_muted = (d) => color_player_muted(d.type);
+  const mouseover = (event, d) => {
     link
-      .attr('opacity', 0)
-      .transition()
-      .delay(delay)
-      .duration(1500)
-      .attr('opacity', 1);
+      .attr('stroke', link_stroke_muted)
+      .attr('marker-end', link_marker_muted);
     stem
-      .attr('opacity', 0)
-      .transition()
-      .delay(delay)
-      .duration(1500)
-      .attr('opacity', 1);
-    node.transition().delay(delay).duration(1500).attr('r', node_radius);
+      .attr('stroke', node_color_muted)
+      .filter((dd) => dd.target.id === d.id)
+      .raise()
+      .attr('stroke', node_color)
+      .attr('display', 'unset');
+    node.attr('fill', node_color_muted);
+    d3.select(event.currentTarget).attr('fill', node_color);
 
-    const d_arrow = (d) =>
-      `M${bound_x(d.source.x)},${bound_y(d.source.y)} L${bound_x(
-        d.target.x
-      )},${bound_y(d.target.y)}`;
-    const d_stem = d3
-      .linkVertical()
-      .source((d) => d.source)
-      .target((d) => d.target)
-      .x((d) => bound_x(d.x))
-      .y((d) => bound_y(d.y));
-    simulation.on('tick', () => {
-      link.attr('d', d_arrow);
-      stem.attr('d', d_stem);
-      node.attr('cx', cx).attr('cy', cy);
-    });
+    onMouseOverNode(d);
+  };
+  const mouseout = (event, d) => {
+    if (!dragging) {
+      link.attr('stroke', link_stroke).attr('marker-end', link_marker);
+      stem.attr('stroke', node_color).attr('display', stem_display);
+      node.attr('fill', node_color);
+
+      onMouseOutOfNode(d);
+    }
+  };
+  const cx = (d) => bound_x(d.x);
+  const cy = (d) => bound_y(d.y);
+  const node = svg
+    .append('g')
+    .selectAll('circle')
+    .data(nodes)
+    .join('circle')
+    .classed('node', true)
+    .attr('fill', node_color)
+    .attr('cx', cx)
+    .attr('cy', cy)
+    .call(drag())
+    .on('mouseover', mouseover)
+    .on('mouseout', mouseout)
+    .on('click', (_, d) => onClickNode(d));
+
+  const delay = (d, i) => i * 15;
+  link
+    .attr('opacity', 0)
+    .transition()
+    .delay(delay)
+    .duration(1500)
+    .attr('opacity', 1);
+  stem
+    .attr('opacity', 0)
+    .transition()
+    .delay(delay)
+    .duration(1500)
+    .attr('opacity', 1);
+  node.transition().delay(delay).duration(1500).attr('r', node_radius);
+
+  const d_arrow = (d) =>
+    `M${bound_x(d.source.x)},${bound_y(d.source.y)} L${bound_x(
+      d.target.x
+    )},${bound_y(d.target.y)}`;
+  const d_stem = d3
+    .linkVertical()
+    .source((d) => d.source)
+    .target((d) => d.target)
+    .x((d) => bound_x(d.x))
+    .y((d) => bound_y(d.y));
+  simulation.on('tick', () => {
+    link.attr('d', d_arrow);
+    stem.attr('d', d_stem);
+    node.attr('cx', cx).attr('cy', cy);
   });
 }
