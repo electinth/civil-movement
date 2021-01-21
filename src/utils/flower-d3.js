@@ -6,21 +6,15 @@ const thai_date_from_string = (str) => {
   return new Date(+dmy[2] - 543, +dmy[1] - 1, +dmy[0]);
 };
 
-const thai_date_to_string = (date) => {
-  return new Date(date).toLocaleDateString('th-TH', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-};
-
-export function plot(stageElement, tooltipElement) {
+export function plot(
+  stageElement,
+  onMouseOverNode,
+  onMouseOutOfNode,
+  onClickNode
+) {
   const width = stageElement.clientWidth;
   const height = stageElement.clientHeight;
   const mode = width > height ? 'desktop' : 'mobile';
-
-  const tooltip = d3.select(tooltipElement);
 
   let simulation;
   let dragging = false;
@@ -208,8 +202,6 @@ export function plot(stageElement, tooltipElement) {
       `url(${new URL(`#arrow-${d.type}-muted`, location.toString())})`;
     const node_color_muted = (d) => color_player_muted(d.type);
     const mouseover = (event, d) => {
-      tooltip.text(`${d.id}: ${d.name} (${thai_date_to_string(d.date)})`);
-
       link
         .attr('stroke', link_stroke_muted)
         .attr('marker-end', link_marker_muted);
@@ -221,12 +213,16 @@ export function plot(stageElement, tooltipElement) {
         .attr('display', 'unset');
       node.attr('fill', node_color_muted);
       d3.select(event.currentTarget).attr('fill', node_color);
+
+      onMouseOverNode(d);
     };
     const mouseout = (event, d) => {
       if (!dragging) {
         link.attr('stroke', link_stroke).attr('marker-end', link_marker);
         stem.attr('stroke', node_color).attr('display', stem_display);
         node.attr('fill', node_color);
+
+        onMouseOutOfNode(d);
       }
     };
     const cx = (d) => bound_x(d.x);
@@ -242,7 +238,8 @@ export function plot(stageElement, tooltipElement) {
       .attr('cy', cy)
       .call(drag())
       .on('mouseover', mouseover)
-      .on('mouseout', mouseout);
+      .on('mouseout', mouseout)
+      .on('click', (_, d) => onClickNode(d));
 
     const delay = (d, i) => i * 15;
     link
