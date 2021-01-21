@@ -8,6 +8,7 @@ const thai_date_from_string = (str) => {
 
 export function plot(
   data,
+  filter,
   stageElement,
   onMouseOverNode,
   onMouseOutOfNode,

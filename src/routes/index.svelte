@@ -4,8 +4,10 @@
   import Typography from '../components/typography.svelte';
   import { ORGANIZERS, KEY_TOPICS } from '../constants/filter.ts';
 
-  let selectedOrganizers = ORGANIZERS.map(({ key }) => key);
-  let selectedKeyTopics = KEY_TOPICS.map(({ key }) => key);
+  const filter = {
+    organizers: ORGANIZERS.map(({ key }) => key),
+    keyTopics: KEY_TOPICS.map(({ key }) => key),
+  };
 </script>
 
 <svelte:head>
@@ -22,19 +24,19 @@
       <Typography as="subtitle5" bold class="my-auto">โดย</Typography>
       <FilterDropdown
         filter={ORGANIZERS}
-        bind:activeFilter={selectedOrganizers}
+        bind:activeFilter={filter.organizers}
         selectedAllLabel="ทุกผู้ดำเนินการ"
         selectedNoneLabel="เลือกอย่างน้อยหนึ่งข้อ"
       />
       <Typography as="subtitle5" bold class="my-auto">เกี่ยวกับ</Typography>
       <FilterDropdown
         filter={KEY_TOPICS}
-        bind:activeFilter={selectedKeyTopics}
+        bind:activeFilter={filter.keyTopics}
         selectedAllLabel="ทุกข้อเรียกร้อง"
         selectedNoneLabel="เลือกอย่างน้อยหนึ่งข้อ"
       />
     </div>
   </div>
 
-  <FlowerVisualization />
+  <FlowerVisualization {filter} />
 </div>

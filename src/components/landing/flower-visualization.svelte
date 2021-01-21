@@ -5,6 +5,11 @@
 
   import movements from '../../assets/data/event_all.csv';
 
+  interface Filter {
+    organizers: [];
+    keyTopics: [];
+  }
+
   interface Node {
     name: string;
     date: Date;
@@ -14,6 +19,8 @@
     offsetTop: number;
     tooltipRight: boolean;
   }
+
+  export let filter: Filter;
 
   let stage: SVGSVGElement;
   let focusingNode: Node;
@@ -46,7 +53,14 @@
     });
 
   onMount(() =>
-    plot(movements, stage, onMouseOverNode, onMouseOutOfNode, onClickNode)
+    plot(
+      movements,
+      filter,
+      stage,
+      onMouseOverNode,
+      onMouseOutOfNode,
+      onClickNode
+    )
   );
 </script>
 
