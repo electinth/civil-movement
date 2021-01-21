@@ -6,8 +6,8 @@
   import movements from '../../assets/data/event_all.csv';
 
   interface Filter {
-    organizers: [];
-    keyTopics: [];
+    organizers: string[];
+    keyTopics: string[];
   }
 
   interface Node {
