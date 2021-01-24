@@ -43,6 +43,9 @@ module.exports = {
       'blue-light': '#0A98FF',
       'blue-dark': '#0000CD',
     },
+    cursor: {
+      handle: 'ew-resize',
+    },
     extend: {},
   },
   variants: {

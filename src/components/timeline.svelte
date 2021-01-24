@@ -135,7 +135,7 @@
   {#each values as value, index}
     <div
       id="handle-{index}"
-      class="absolute h-full bg-black opacity-25 cursor-pointer"
+      class="absolute h-full bg-black opacity-25 cursor-handle"
       style="left: {stepSize * (value - 0.25)}px; width: {stepSize / 2}px;"
       on:mousedown={sliderInteractStart}
       on:mouseup={sliderInteractEnd}
