@@ -43,7 +43,11 @@
   <FlowerVisualization {filter} />
 
   <div class="">
-    <Linechart />
-    <Timeline />
+    <div class="">
+      <Linechart />
+    </div>
+    <div class="">
+      <Timeline />
+    </div>
   </div>
 </div>
