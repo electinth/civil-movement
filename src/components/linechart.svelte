@@ -1,7 +1,42 @@
 <script lang="ts">
   import { line, max, scaleLinear, scalePoint } from 'd3';
-  type TData = { x: number; y: number };
-  export let data: TData[] = [];
+
+  import rawdata from '../assets/data/event_all.csv';
+
+  function toMonth(datestring) {
+    const [, month, year] = datestring.split('-');
+    return month + '-' + year;
+  }
+
+  type TData = { x: string; y: number };
+  export let data: TData[] = formatMovementData(rawdata);
+  function formatMovementData(movements: typeof rawdata): TData[] {
+    const monthyears = movements.map((movement) => toMonth(movement.date));
+
+    const count: { [key: string]: number } = monthyears.reduce(
+      (data, monthyear) => {
+        if (typeof data[monthyear] === 'undefined') {
+          data[monthyear] = 1;
+        } else {
+          data[monthyear] += 1;
+        }
+
+        return data;
+      },
+      {}
+    );
+
+    const data = Object.entries(count).map(([x, y]) => ({ x, y }));
+    data.sort((a, b) => {
+      const [amonth, ayear] = a.x.split('-');
+      const [bmonth, byear] = b.x.split('-');
+
+      return ayear !== byear ? +ayear - +byear : +amonth - +bmonth;
+    });
+    console.log(data);
+
+    return data;
+  }
 
   let width = 1000,
     height = 500,

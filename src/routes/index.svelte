@@ -1,7 +1,8 @@
 <script>
   import FilterDropdown from '../components/landing/filter-dropdown.svelte';
   import FlowerVisualization from '../components/landing/flower-visualization.svelte';
-import Timeline from '../components/timeline.svelte';
+  import Linechart from '../components/linechart.svelte';
+  import Timeline from '../components/timeline.svelte';
   import Typography from '../components/typography.svelte';
   import { ORGANIZERS, KEY_TOPICS } from '../constants/filter.ts';
 
@@ -42,6 +43,7 @@ import Timeline from '../components/timeline.svelte';
   <FlowerVisualization {filter} />
 
   <div class="">
+    <Linechart />
     <Timeline />
   </div>
 </div>
