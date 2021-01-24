@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   // slider state
   let handleActivated = false,
     activeHandleIndex = 0;
 
-  const dispatch = createEventDispatcher();
   export const minmax: [number, number] = [0, 14];
   const [min, max] = minmax;
 
@@ -20,34 +17,24 @@
   let step = 1;
 
   function sliderInteractStart(e: MouseEvent) {
-    console.log('--- slider interact start ---');
-    console.log(e);
     e.preventDefault();
 
     handleActivated = true;
     const handle = e.target as HTMLDivElement;
     activeHandleIndex = +handle.id.slice(-1);
 
-    const currentValue = ranges[activeHandleIndex];
     handleInteract(e);
-    eventStart();
   }
 
   function sliderInteractEnd(e: MouseEvent) {
-    console.log('--- slider interact end ---');
-    console.log(e);
-
     handleActivated = false;
 
     handleInteract(e);
-    eventStop();
   }
 
   function sliderBlurHandle(e: FocusEvent) {
     console.log('--- slider blur handle ---');
     console.log(e);
-
-    eventChange();
   }
 
   function moveHandle(index, value) {
@@ -95,18 +82,6 @@
     }
     return aligned;
   };
-
-  function eventStart() {
-    dispatch('start', {});
-  }
-
-  function eventStop() {
-    dispatch('stop', {});
-  }
-
-  function eventChange() {
-    dispatch('change', {});
-  }
 </script>
 
 <div

@@ -2,8 +2,6 @@
   import FilterDropdown from '../components/landing/filter-dropdown.svelte';
   import FlowerTimeline from '../components/landing/flower-timeline.svelte';
   import FlowerVisualization from '../components/landing/flower-visualization.svelte';
-  import Linechart from '../components/linechart.svelte';
-  import Timeline from '../components/timeline.svelte';
   import Typography from '../components/typography.svelte';
   import { ORGANIZERS, KEY_TOPICS } from '../constants/filter.ts';
 
