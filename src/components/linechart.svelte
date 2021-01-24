@@ -5,40 +5,11 @@
     line,
     max,
     scaleLinear,
-    scalePoint,
     scaleTime,
-    timeParse,
   } from 'd3';
+  import type { TData } from '../utils/formatMovementToLinedata';
 
-  import rawdata from '../assets/data/event_all.csv';
-
-  function parser(datestring) {
-    const [day, month, year] = datestring.split('-');
-
-    return timeParse('%d %m %Y')(`${day} ${month} ${year - 543}`);
-  }
-
-  type TData = { x: Date; y: number };
-  export let data: TData[] = formatMovementData(rawdata);
-  function formatMovementData(movements: typeof rawdata): TData[] {
-    const date = movements.map((movement) => parser(movement.date));
-
-    const count: { [key: string]: TData } = date.reduce((counter, date) => {
-      const strdate = date.toString();
-      if (typeof counter[strdate] === 'undefined') {
-        counter[strdate] = { x: date, y: 1 };
-      } else {
-        counter[strdate].y += 1;
-      }
-
-      return counter;
-    }, {});
-    const data = Object.values(count);
-    console.log(data);
-    data.sort((a, b) => a.x.getTime() - b.x.getTime());
-
-    return data;
-  }
+  export let data: TData[] = [];
 
   let width = 1000,
     height = 500,

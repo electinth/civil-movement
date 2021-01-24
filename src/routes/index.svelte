@@ -1,5 +1,6 @@
 <script>
   import FilterDropdown from '../components/landing/filter-dropdown.svelte';
+  import FlowerTimeline from '../components/landing/flower-timeline.svelte';
   import FlowerVisualization from '../components/landing/flower-visualization.svelte';
   import Linechart from '../components/linechart.svelte';
   import Timeline from '../components/timeline.svelte';
@@ -42,12 +43,5 @@
 
   <FlowerVisualization {filter} />
 
-  <div class="">
-    <div class="">
-      <Linechart />
-    </div>
-    <div class="">
-      <Timeline />
-    </div>
-  </div>
+  <FlowerTimeline />
 </div>
