@@ -5,10 +5,10 @@
   import Linechart from '../linechart.svelte';
   import formatMovementData from '../../utils/formatMovementToLinedata';
 
-  const data = formatMovementData(movements);
-  console.log('flower-timeline::', data);
+  const linedata = formatMovementData(movements);
 
   let values = [0, 5];
+  const timelineRanges = linedata.map((d) => d.x);
 </script>
 
 <div class="relative">
@@ -16,9 +16,9 @@
     class="absolute w-full pointer-events-none"
     style="transform: translate(0, -100%);"
   >
-    <Linechart {data} />
+    <Linechart data={linedata} />
   </div>
   <div class="">
-    <Timeline bind:values />
+    <Timeline bind:values rangesItem={timelineRanges} />
   </div>
 </div>
