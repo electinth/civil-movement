@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    curveCatmullRom,
     extent,
     line,
     max,
@@ -52,7 +53,8 @@
 
   $: pathDef = line<TData>()
     .x((d) => X(d.x))
-    .y((d) => Y(d.y));
+    .y((d) => Y(d.y))
+    .curve(curveCatmullRom);
 </script>
 
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
