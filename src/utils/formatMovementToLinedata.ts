@@ -24,7 +24,6 @@ export default function formatMovementData(
     return counter;
   }, {});
   const data = Object.values(count);
-  console.log(data);
   data.sort((a, b) => a.x.getTime() - b.x.getTime());
 
   return data;

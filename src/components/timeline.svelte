@@ -30,7 +30,6 @@
     activeHandleIndex = +handle.id.slice(-1);
 
     const currentValue = ranges[activeHandleIndex];
-    let previousValue = alignValueToStep(currentValue);
     handleInteract(e);
     eventStart();
   }
