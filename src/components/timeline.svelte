@@ -13,11 +13,10 @@
 
   let slider, width: number, height: number;
 
-  let values = [4, 12];
+  export let values = [4, 12];
   $: [start, end] = values;
 
   $: stepSize = width / ranges.length;
-  $: rangesLen = ranges.length;
   let step = 1;
 
   function sliderInteractStart(e: MouseEvent) {

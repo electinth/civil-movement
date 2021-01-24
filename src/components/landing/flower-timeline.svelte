@@ -7,6 +7,8 @@
 
   const data = formatMovementData(movements);
   console.log('flower-timeline::', data);
+
+  let values = [0, 5];
 </script>
 
 <div class="relative">
@@ -17,6 +19,6 @@
     <Linechart {data} />
   </div>
   <div class="">
-    <Timeline />
+    <Timeline bind:values />
   </div>
 </div>
