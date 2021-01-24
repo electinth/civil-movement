@@ -1,18 +1,36 @@
 <script lang="ts">
-  import { extent } from 'd3';
+  import { extent, timeParse } from 'd3';
 
   // slider state
   let handleActivated = false,
     activeHandleIndex = 0;
 
-  export let ranges = [...Array(14).keys()];
+  export let rangesItem: any[] = [...Array(14).keys()];
+  $: ranges = [...Array(rangesItem.length).keys()];
   $: [min, max] = extent(ranges);
+  $: divider = (function () {
+    const ranges = rangesItem as Date[];
+
+    const monthyears = ranges.map(
+      (date) => `${date.getMonth()}-${date.getFullYear()}`
+    );
+
+    const monthyear = [...new Set(monthyears)];
+    // .map((monthyear) =>
+    //   timeParse('%m-%Y')(monthyear).getMonth()
+    // );
+    console.log(monthyear);
+
+    return monthyear;
+  })();
 
   let slider, width: number, height: number;
 
   export let values = [4, 12];
   $: [start, end] = values;
+  $: console.log('values::', values);
 
+  $: dividerSize = width / divider.length;
   $: stepSize = width / ranges.length;
   let step = 1;
 
@@ -68,8 +86,10 @@
 
   $: alignValueToStep = function (val: number): number {
     if (val <= min) {
+      console.log('alignValueToStep::val<min');
       return min;
     } else if (val >= max) {
+      console.log('alignValueToStep::val>max');
       return max;
     }
     let remainder = (val - min) % step;
@@ -91,10 +111,10 @@
   bind:clientHeight={height}
   bind:this={slider}
 >
-  {#each ranges as month}
+  {#each divider as month}
     <div
       class="section text-center border-r-2 my-3 border-gray"
-      style="flex: 0 0 {stepSize}px;"
+      style="flex: 0 0 {dividerSize}px;"
     >
       {month}
     </div>
