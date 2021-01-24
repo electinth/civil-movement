@@ -57,9 +57,15 @@
 
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
   <svg class="h-full w-full">
+    <defs>
+      <linearGradient id="whiteGradient" gradientTransform="rotate(90)">
+        <stop offset="0%" stop-color="white" stop-opacity="1" />
+        <stop offset="100%" stop-color="white" stop-opacity="0" />
+      </linearGradient>
+    </defs>
     <path
       d={pathDef(data)}
-      fill="transparent"
+      fill="url(#whiteGradient)"
       class="stroke-current text-white"
     />
     <g transform={`translate(${margin.left}, ${margin.top})`} />
