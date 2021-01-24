@@ -17,7 +17,8 @@
   $: [start, end] = values;
 
   $: stepSize = width / ranges.length;
-  $: step = ranges.length;
+  $: rangesLen = ranges.length;
+  let step = 1;
 
   function sliderInteractStart(e: MouseEvent) {
     console.log('--- slider interact start ---');
@@ -66,11 +67,14 @@
     handleActivated = false;
   }
 
-  function handleInteract(clientPos: { x: number; y: number }) {
-    moveHandle(activeHandleIndex, values[activeHandleIndex]);
+  function handleInteract({ clientX }: { clientX: number }) {
+    let position = clientX;
+    let ratio = position / width;
+    let newValue = min + (max - min) * ratio;
+    moveHandle(activeHandleIndex, newValue);
   }
 
-  function bodyInteraect(e: MouseEvent) {
+  function bodyInteract(e: MouseEvent) {
     if (handleActivated) {
       console.log('--- body interact ---');
       handleInteract(e);
@@ -85,6 +89,9 @@
     }
     let remainder = (val - min) % step;
     let aligned = val - remainder;
+    console.log(
+      `alignValueToStep:: val=${val}, min=${min}, max=${max}, step=${step}, remainder=${remainder}, aligned=${aligned}`
+    );
     if (Math.abs(remainder) * 2 >= step) {
       aligned += remainder > 0 ? step : -step;
     }
@@ -137,4 +144,4 @@
   {/each}
 </div>
 
-<svelte:window on:mousemove={bodyInteraect} on:mouseup={bodyMouseUp} />
+<svelte:window on:mousemove={bodyInteract} on:mouseup={bodyMouseUp} />
