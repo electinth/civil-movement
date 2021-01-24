@@ -1,12 +1,12 @@
 <script lang="ts">
+  import { extent } from 'd3';
+
   // slider state
   let handleActivated = false,
     activeHandleIndex = 0;
 
-  export const minmax: [number, number] = [0, 14];
-  const [min, max] = minmax;
-
-  $: ranges = [...Array(max - min).keys()];
+  export let ranges = [...Array(14).keys()];
+  $: [min, max] = extent(ranges);
 
   let slider, width: number, height: number;
 
