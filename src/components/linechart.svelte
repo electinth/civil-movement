@@ -46,17 +46,21 @@
     .domain([0, max(data, (d) => d.y)])
     .range([height - margin.bottom, margin.top]);
   $: X = scalePoint()
-    .domain(data.map((d) => d.x.toString()))
+    .domain(data.map((d) => d.x))
     .range([margin.left, width - margin.right]);
 
   $: pathDef = line<TData>()
-    .x((d) => X(d.x.toString()))
+    .x((d) => X(d.x))
     .y((d) => Y(d.y));
 </script>
 
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
   <svg class="h-full w-full">
-    <path d={pathDef(data)} />
+    <path
+      d={pathDef(data)}
+      fill="transparent"
+      class="stroke-current text-white"
+    />
     <g transform={`translate(${margin.left}, ${margin.top})`} />
   </svg>
 </div>
