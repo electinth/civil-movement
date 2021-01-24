@@ -1,29 +1,36 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
+  // slider state
+  let handleActivated = false,
+    activeHandleIndex = 0;
+
   const dispatch = createEventDispatcher();
   export const minmax: [number, number] = [0, 14];
   const [min, max] = minmax;
 
-  $: values = [...Array(max - min).keys()];
+  $: ranges = [...Array(max - min).keys()];
 
   let slider, width: number, height: number;
 
-  const startend = [4, 12];
-  const [start, end] = startend;
+  let values = [4, 12];
+  $: [start, end] = values;
 
-  $: stepSize = width / values.length;
-  $: step = values.length;
+  $: stepSize = width / ranges.length;
+  $: step = ranges.length;
 
   function sliderInteractStart(e: MouseEvent) {
     console.log('--- slider interact start ---');
     console.log(e);
     e.preventDefault();
-    const handle = e.target as HTMLDivElement,
-      activeHandleIndex = +handle.id.slice(-1);
 
-    const currentValue = values[activeHandleIndex];
+    handleActivated = true;
+    const handle = e.target as HTMLDivElement;
+    activeHandleIndex = +handle.id.slice(-1);
+
+    const currentValue = ranges[activeHandleIndex];
     let previousValue = alignValueToStep(currentValue);
+    handleInteract(e);
     eventStart();
   }
 
@@ -31,6 +38,9 @@
     console.log('--- slider interact end ---');
     console.log(e);
 
+    handleActivated = false;
+
+    handleInteract(e);
     eventStop();
   }
 
@@ -39,6 +49,32 @@
     console.log(e);
 
     eventChange();
+  }
+
+  function moveHandle(index, value) {
+    console.log('movehande::value:', value);
+    value = alignValueToStep(value);
+    console.log('movehande::alignvalue:', value);
+
+    if (values[index] !== value) {
+      values[index] = value;
+      values = [...values];
+    }
+  }
+
+  function bodyMouseUp(e: MouseEvent) {
+    handleActivated = false;
+  }
+
+  function handleInteract(clientPos: { x: number; y: number }) {
+    moveHandle(activeHandleIndex, values[activeHandleIndex]);
+  }
+
+  function bodyInteraect(e: MouseEvent) {
+    if (handleActivated) {
+      console.log('--- body interact ---');
+      handleInteract(e);
+    }
   }
 
   $: alignValueToStep = function (val: number): number {
@@ -75,7 +111,7 @@
   bind:clientHeight={height}
   bind:this={slider}
 >
-  {#each values as month}
+  {#each ranges as month}
     <div
       class="section text-center border-r-2 my-3 border-gray"
       style="flex: 0 0 {stepSize}px;"
@@ -89,7 +125,7 @@
     style="left: {stepSize * start}px; width: {stepSize *
       (end - start)}px; mix-blend-mode: multiply;"
   />
-  {#each startend as value, index}
+  {#each values as value, index}
     <div
       id="handle-{index}"
       class="absolute h-full bg-black opacity-25 cursor-pointer"
@@ -100,3 +136,5 @@
     />
   {/each}
 </div>
+
+<svelte:window on:mousemove={bodyInteraect} on:mouseup={bodyMouseUp} />
