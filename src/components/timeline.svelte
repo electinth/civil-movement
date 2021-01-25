@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { extent, timeParse } from 'd3';
+  import d3, { extent, ScaleTime, scaleTime, timeParse } from 'd3';
 
   // slider state
   let handleActivated = false,
     activeHandleIndex = 0;
 
-  export let rangesItem: any[] = [...Array(14).keys()];
+  export let X: ScaleTime<number, number, never> = scaleTime();
+  $: rangesItem = X.ticks(d3.timeDay.every(1));
+  $: console.log('timeline::', X, rangesItem);
   $: ranges = [...Array(rangesItem.length).keys()];
   $: [min, max] = extent(ranges);
   $: divider = (function () {
