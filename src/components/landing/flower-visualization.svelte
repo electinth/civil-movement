@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { plot } from '../../utils/flower-d3';
+  import { reshapeData, plot } from '../../utils/flower-d3';
   import Typography from '../typography.svelte';
 
   import movements from '../../assets/data/event_all.csv';
@@ -52,16 +52,18 @@
       day: 'numeric',
     });
 
-  onMount(() =>
+  const reshapedMovements = reshapeData(movements);
+
+  onMount(() => {
     plot(
-      movements,
+      reshapedMovements,
       filter,
       stage,
       onMouseOverNode,
       onMouseOutOfNode,
       onClickNode
-    )
-  );
+    );
+  });
 </script>
 
 <div class="relative flex-1">

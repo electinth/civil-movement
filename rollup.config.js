@@ -8,9 +8,10 @@ import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
-import dsv from '@rollup/plugin-dsv';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+
+import { parseCsv } from './src/utils/csv.ts';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -49,7 +50,7 @@ export default {
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
-      dsv(),
+      parseCsv(),
 
       legacy &&
         babel({
@@ -112,7 +113,7 @@ export default {
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
-      dsv(),
+      parseCsv(),
     ],
     external: Object.keys(pkg.dependencies).concat(
       require('module').builtinModules
