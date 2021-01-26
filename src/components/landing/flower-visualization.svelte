@@ -10,11 +10,14 @@
     keyTopics: string[];
   }
 
-  interface Node {
-    name: string;
-    date: Date;
+  interface EventNode {
+    id: string;
     x: number;
     y: number;
+  }
+
+  interface EventNodeWithData {
+    data: typeof movements[number];
     offsetLeft: number;
     offsetTop: number;
     tooltipRight: boolean;
@@ -23,13 +26,16 @@
   export let filter: Filter;
 
   let stage: SVGSVGElement;
-  let focusingNode: Node;
+  let focusingNode: EventNodeWithData;
 
-  const onMouseOverNode = (pointData: Node) => {
+  const onMouseOverNode = (pointData: EventNode) => {
     const offsetLeft = Math.round(pointData.x + stage.clientWidth / 2);
     const offsetTop = Math.round(pointData.y + stage.clientHeight / 2);
+
+    const data = movements.find(({ event_no }) => event_no === pointData.id);
+
     focusingNode = {
-      ...pointData,
+      data,
       offsetLeft,
       offsetTop,
       tooltipRight: offsetLeft < stage.clientWidth / 2,
@@ -79,8 +85,12 @@
           ? 'left-1'
           : 'right-1'} w-48 break-words bg-black bg-opacity-50 text-white p-2 rounded"
       >
-        <Typography as="subtitle5" bold>{focusingNode.name}</Typography>
-        <Typography as="subtitle5">{formatDate(focusingNode.date)}</Typography>
+        <Typography as="subtitle5" bold
+          >{focusingNode.data.event_name}</Typography
+        >
+        <Typography as="subtitle5"
+          >{formatDate(focusingNode.data.date)}</Typography
+        >
       </div>
     </div>
   {/if}

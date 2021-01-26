@@ -2,19 +2,19 @@ declare module '*/event_all.csv' {
   interface MovementRawData {
     event_no: string;
     event_name: string;
-    pre_event: string;
-    reaction_type: string;
-    player: string;
-    date: string;
+    pre_event: number;
+    reaction_type: number;
+    player: number;
+    date: Date;
     location: string;
     cause: string;
     proposal: string;
-    key_topic: string;
-    time_show: string;
-    x_desktop: string;
-    y_desktop: string;
-    x_mobile: string;
-    y_mobile: string;
+    key_topic: number;
+    time_show: number;
+    x_desktop: number;
+    y_desktop: number;
+    x_mobile: number;
+    y_mobile: number;
     hashtag: string;
     tag: string;
   }

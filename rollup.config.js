@@ -11,7 +11,7 @@ import typescript from '@rollup/plugin-typescript';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 
-import { parseCsv } from './src/utils/csv.ts';
+import { parseCsv } from './src/utils/csv.js';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';

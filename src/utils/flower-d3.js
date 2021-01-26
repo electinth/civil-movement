@@ -1,11 +1,6 @@
 import * as d3 from 'd3';
 import * as d3ForceSampled from 'd3-force-sampled';
 
-const thai_date_from_string = (str) => {
-  const dmy = str.split('-');
-  return new Date(+dmy[2] - 543, +dmy[1] - 1, +dmy[0]);
-};
-
 export const reshapeData = (data) => {
   const node_sizes = {};
   const nodes = [];
@@ -13,14 +8,10 @@ export const reshapeData = (data) => {
   const stems = [];
 
   data
-    .sort(
-      (a, b) =>
-        thai_date_from_string(a.date).getMilliseconds() -
-        thai_date_from_string(b.date).getMilliseconds()
-    )
+    .sort((a, b) => a.date.getMilliseconds() - b.date.getMilliseconds())
     .forEach(
       ({
-        date: rawDate,
+        date,
         event_no,
         player,
         time_show,
@@ -32,7 +23,6 @@ export const reshapeData = (data) => {
         reaction_type,
       }) => {
         const id = event_no;
-        const date = thai_date_from_string(rawDate);
 
         let node = {
           id: event_no,
