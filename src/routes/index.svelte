@@ -16,8 +16,7 @@
 </svelte:head>
 
 <div
-  class="flex flex-col h-screen"
-  style="background: linear-gradient(180deg, #A3FFF9 0%, #69FFBF 100%);"
+  class="flex flex-col h-screen -mt-10 md:-mt-12 pt-10 md:pt-12 bg-gradient-to-b from-mint-light to-mint"
 >
   <div class="mx-auto text-center mt-8 z-10">
     <Typography as="h1" bold>651 เหตุการณ์</Typography>

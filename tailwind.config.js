@@ -40,6 +40,7 @@ module.exports = {
       gray: '#A9A9A9',
       black: 'black',
       mint: '#88FFCC',
+      'mint-light': '#BFFFFB',
       'blue-light': '#0A98FF',
       'blue-dark': '#0000CD',
     },
