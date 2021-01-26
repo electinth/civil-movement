@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { reshapeData, plot } from '../../utils/flower-d3';
+  import { onMount, createEventDispatcher } from 'svelte';
 
+  import { reshapeData, plot } from '../../utils/flower-d3';
   import movements from '../../assets/data/event_all.csv';
   import MovementTooltip from './movement-tooltip.svelte';
   import type { MovementNodeWithData } from './movement-tooltip.svelte';
@@ -22,26 +22,29 @@
   let stage: SVGSVGElement;
   let focusingNode: MovementNodeWithData;
 
-  const onMouseOverNode = (pointData: EventNode) => {
-    const offsetLeft = Math.round(pointData.x + stage.clientWidth / 2);
-    const offsetTop = Math.round(pointData.y + stage.clientHeight / 2);
+  const dispatch = createEventDispatcher();
 
-    const data = movements.find(({ event_no }) => event_no === pointData.id);
+  const getMovementFromId = (id: string) =>
+    movements.find(({ event_no }) => event_no === id);
+
+  const onMouseOverNode = ({ x, y, id }: EventNode): void => {
+    const offsetLeft = Math.round(x + stage.clientWidth / 2);
+    const offsetTop = Math.round(y + stage.clientHeight / 2);
 
     focusingNode = {
-      data,
+      data: getMovementFromId(id),
       offsetLeft,
       offsetTop,
       tooltipRight: offsetLeft < stage.clientWidth / 2,
     };
   };
 
-  const onMouseOutOfNode = () => {
+  const onMouseOutOfNode = (): void => {
     focusingNode = null;
   };
 
-  const onClickNode = (pointData: Node) => {
-    console.log(pointData);
+  const onClickNode = ({ id }: EventNode): void => {
+    dispatch('movement-click', getMovementFromId(id));
   };
 
   const reshapedMovements = reshapeData(movements);

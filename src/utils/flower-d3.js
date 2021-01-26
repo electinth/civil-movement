@@ -274,6 +274,7 @@ export function plot(
     .data(nodes)
     .join('circle')
     .classed('node', true)
+    .classed('cursor-pointer', true)
     .attr('fill', node_color)
     .attr('cx', cx)
     .attr('cy', cy)

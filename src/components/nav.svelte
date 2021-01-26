@@ -8,7 +8,7 @@
   ];
 </script>
 
-<div class="flex flex-row py-2 px-3 bg-white h-10 md:h-12 z-10">
+<div class="flex flex-row px-3 bg-white h-10 md:h-12 z-10">
   <div class="md:flex-1 flex">
     <a href="/" class="h-4 md:h-5 my-auto">
       <img src="images/logo-elect-header.svg" alt="ELECT" class="h-4 md:h-5" />
