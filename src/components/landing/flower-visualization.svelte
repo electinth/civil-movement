@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { reshapeData, plot } from '../../utils/flower-d3';
-  import Typography from '../typography.svelte';
 
   import movements from '../../assets/data/event_all.csv';
+  import MovementTooltip from './movement-tooltip.svelte';
+  import type { MovementNodeWithData } from './movement-tooltip.svelte';
 
   interface Filter {
     organizers: string[];
@@ -16,17 +17,10 @@
     y: number;
   }
 
-  interface EventNodeWithData {
-    data: typeof movements[number];
-    offsetLeft: number;
-    offsetTop: number;
-    tooltipRight: boolean;
-  }
-
   export let filter: Filter;
 
   let stage: SVGSVGElement;
-  let focusingNode: EventNodeWithData;
+  let focusingNode: MovementNodeWithData;
 
   const onMouseOverNode = (pointData: EventNode) => {
     const offsetLeft = Math.round(pointData.x + stage.clientWidth / 2);
@@ -50,14 +44,6 @@
     console.log(pointData);
   };
 
-  const formatDate = (date: Date) =>
-    new Date(date).toLocaleDateString('th-TH', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-
   const reshapedMovements = reshapeData(movements);
 
   onMount(() => {
@@ -76,22 +62,6 @@
   <svg bind:this={stage} class="w-full h-full" />
 
   {#if focusingNode}
-    <div
-      class="absolute"
-      style="top: {focusingNode.offsetTop}px; left: {focusingNode.offsetLeft}px;"
-    >
-      <div
-        class="absolute bottom-2 {focusingNode.tooltipRight
-          ? 'left-1'
-          : 'right-1'} w-48 break-words bg-black bg-opacity-50 text-white p-2 rounded"
-      >
-        <Typography as="subtitle5" bold
-          >{focusingNode.data.event_name}</Typography
-        >
-        <Typography as="subtitle5"
-          >{formatDate(focusingNode.data.date)}</Typography
-        >
-      </div>
-    </div>
+    <MovementTooltip node={focusingNode} />
   {/if}
 </div>
