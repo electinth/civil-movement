@@ -20,24 +20,26 @@
   }
 </script>
 
-<div use:clickOutside={() => (isOpen = false)}>
+<div use:clickOutside={() => (isOpen = false)} class="w-28 md:w-36">
   <button
     on:click={() => (isOpen = !isOpen)}
-    class={`flex flex-row px-2 py-1 space-x-2 rounded focus:outline-none ${
+    class={`flex flex-row px-2 py-1 space-x-2 rounded focus:outline-none w-full ${
       isOpen ? 'bg-white' : 'hover:bg-white hover:bg-opacity-50'
     }`}>
-    <Typography as="subtitle4">
-      {#if activeFilter.length === filter.length}
-        {selectedAllLabel}
-      {:else if activeFilter.length == 0}
-        {selectedNoneLabel}
-      {:else}
-        {filter.find(({ key }) => key === activeFilter[0]).label}
-        {#if activeFilter.length > 1}
-          + {activeFilter.length - 1}
+    <div class="flex-1 text-left">
+      <Typography as="subtitle4">
+        {#if activeFilter.length === filter.length}
+          {selectedAllLabel}
+        {:else if activeFilter.length == 0}
+          {selectedNoneLabel}
+        {:else}
+          {filter.find(({ key }) => key === activeFilter[0]).label}
+          {#if activeFilter.length > 1}
+            + {activeFilter.length - 1}
+          {/if}
         {/if}
-      {/if}
-    </Typography>
+      </Typography>
+    </div>
     <svg
       width="10"
       height="6"
@@ -50,9 +52,9 @@
     </svg>
   </button>
   {#if isOpen}
-    <div class="relative">
+    <div class="relative w-full">
       <div
-        class="absolute top-1 flex flex-col p-1 rounded bg-black bg-opacity-50 text-white"
+        class="absolute top-1 left-0 right-0 flex flex-col p-1 rounded bg-black bg-opacity-50 text-white"
       >
         {#each filter as option}
           <FilterOption

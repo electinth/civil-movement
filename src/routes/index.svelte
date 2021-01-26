@@ -20,7 +20,7 @@
 >
   <div class="mx-auto text-center mt-8 z-10">
     <Typography as="h1" bold>651 เหตุการณ์</Typography>
-    <div class="flex space-x-2">
+    <div class="flex space-x-2 md:space-x-4">
       <Typography as="subtitle5" bold class="my-auto">โดย</Typography>
       <FilterDropdown
         filter={ORGANIZERS}
