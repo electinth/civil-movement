@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import { scale } from 'svelte/transition';
   import { clickOutside } from 'svelte-use-click-outside';
 
   import type movements from '../../assets/data/event_all.csv';
@@ -20,7 +21,7 @@
   const close = () => dispatch('close');
 </script>
 
-<div class="absolute inset-0 my-32 z-20">
+<div transition:scale={{ duration: 200 }} class="absolute inset-0 my-32 z-20">
   <div
     use:clickOutside={close}
     class="relative flex flex-col m-auto w-full max-w-2xl h-full bg-white rounded-xl p-8 shadow-lg"

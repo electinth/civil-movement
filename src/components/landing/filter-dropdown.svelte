@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition';
+  import { clickOutside } from 'svelte-use-click-outside';
+
   import type { Filter } from '../../constants/filter';
   import Typography from '../typography.svelte';
   import FilterOption from './filter-option.svelte';
-  import { clickOutside } from 'svelte-use-click-outside';
 
   export let filter: Filter[];
   export let activeFilter: string[];
@@ -54,7 +56,7 @@
     </svg>
   </button>
   {#if isOpen}
-    <div class="relative w-full">
+    <div transition:fade={{ duration: 50 }} class="relative w-full">
       <div
         class="absolute top-1 left-0 right-0 flex flex-col p-1 rounded bg-black bg-opacity-50 text-white"
       >

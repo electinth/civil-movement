@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+  import { fade } from 'svelte/transition';
   export interface MovementNodeWithData {
     data: typeof movements[number];
     offsetLeft: number;
@@ -23,6 +24,7 @@
 </script>
 
 <div
+  transition:fade={{ duration: 50 }}
   class="absolute z-20"
   style="top: {node.offsetTop}px; left: {node.offsetLeft}px;"
 >
