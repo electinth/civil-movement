@@ -10,8 +10,10 @@
   import MovementDialog from '../components/landing/movement-dialog.svelte';
   import InstructionDialog from '../components/landing/instruction-dialog.svelte';
   import InstructionButton from '../components/landing/instruction-button.svelte';
-
-  const IS_INSTRUCTION_SEEN_SESSTION_STORAGE_KEY = 'IS_INSTRUCTION_SEEN';
+  import {
+    getIsInstructionSeen,
+    markInstructionAsSeen,
+  } from '../utils/session-storage';
 
   const filter = {
     organizers: ORGANIZERS.map(({ key }) => key),
@@ -25,13 +27,11 @@
   const closeInstructionAndMarkAsSeen = () => {
     isInstructionOpen = false;
     isInstructionSeen = true;
-    sessionStorage.setItem(IS_INSTRUCTION_SEEN_SESSTION_STORAGE_KEY, 'true');
+    markInstructionAsSeen();
   };
 
   onMount(() => {
-    isInstructionSeen = !!sessionStorage.getItem(
-      IS_INSTRUCTION_SEEN_SESSTION_STORAGE_KEY
-    );
+    isInstructionSeen = getIsInstructionSeen();
   });
 </script>
 
