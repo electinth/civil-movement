@@ -1,6 +1,7 @@
 <script>
   import Typography from '../components/typography.svelte';
   import sources from '../assets/data/sources.json';
+  import Sharer from '../components/sharer.svelte';
 </script>
 
 <div class="w-full bg-gradient-to-b from-white to-mint">
@@ -149,5 +150,7 @@
         contact [at] elect.in.th
       </Typography>
     </div>
+
+    <Sharer />
   </div>
 </div>

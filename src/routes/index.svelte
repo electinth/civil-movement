@@ -14,6 +14,7 @@
     getIsInstructionSeen,
     markInstructionAsSeen,
   } from '../utils/session-storage';
+  import Sharer from '../components/sharer.svelte';
 
   const filter = {
     organizers: ORGANIZERS.map(({ key }) => key),
@@ -40,6 +41,10 @@
 </svelte:head>
 
 <section class="relative flex flex-col">
+  <div class="absolute top-2 right-2">
+    <Sharer light vertical />
+  </div>
+
   <div class="flex h-full flex-col bg-gradient-to-b from-mint-light to-mint">
     <div class="mx-auto mt-4 md:mt-8 z-10 px-2 md:px-0">
       <div class="flex flex-row">
