@@ -1,0 +1,1 @@
+import{S as a,i as s,s as t,g as r,r as c,c as e,b as o,u,d as i,f as l,m as n,J as f}from"./client.ccf96528.js";function p(a){let s,t;return{c(){s=r("div"),t=c("about page")},l(a){s=e(a,"DIV",{});var r=o(s);t=u(r,"about page"),r.forEach(i)},m(a,r){l(a,s,r),n(s,t)},p:f,i:f,o:f,d(a){a&&i(s)}}}export default class extends a{constructor(a){super(),s(this,a,null,p,t,{})}}
