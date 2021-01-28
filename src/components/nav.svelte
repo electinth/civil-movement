@@ -15,16 +15,17 @@
     </a>
   </div>
   <div class="hidden md:flex">
-    <a href="/" class="my-auto">
+    <a href="/" class="my-auto flex">
       <Typography as="h3">CIVIL MOVEMENT 2020</Typography>
     </a>
   </div>
-  <div class="flex-1 flex justify-end space-x-1">
+  <div class="flex-1 flex justify-end space-x-1 md:space-x-4">
     {#each routes as { href, label }}
       <a
         {href}
         alt={label}
-        class="my-auto px-2 py-1 rounded-full hover:bg-gray hover:text-white">
+        class="my-auto px-2 py-1 rounded-full hover:bg-gray hover:text-white"
+      >
         <Typography as="subtitle5" bold>{label}</Typography>
       </a>
     {/each}
