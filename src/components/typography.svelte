@@ -12,6 +12,7 @@
 
   export let as: Heading | Subtitle | Body | 'pre';
   export let bold = false;
+  export let indented = false;
 
   $: extraClass = $$props.class || '';
 
@@ -83,7 +84,14 @@
     class="font-subtitle {getSubtitleOrBodyClasses(as)} {extraClass}"
     class:font-semibold={as.includes('subtitle') && bold}
     class:font-bold={as.includes('body') && bold}
+    class:indented
   >
     <slot />
   </p>
 {/if}
+
+<style>
+  .indented {
+    text-indent: 3rem;
+  }
+</style>

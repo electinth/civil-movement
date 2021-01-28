@@ -8,6 +8,7 @@ import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
+import json from '@rollup/plugin-json';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 
@@ -30,7 +31,7 @@ export default {
     output: config.client.output(),
     plugins: [
       replace({
-        'process.browser': true,
+        'process.browser': 'true',
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       svelte({
@@ -50,6 +51,7 @@ export default {
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
+      json(),
       parseCsv(),
 
       legacy &&
@@ -91,7 +93,7 @@ export default {
     output: config.server.output(),
     plugins: [
       replace({
-        'process.browser': false,
+        'process.browser': 'false',
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       svelte({
@@ -113,6 +115,7 @@ export default {
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
+      json(),
       parseCsv(),
     ],
     external: Object.keys(pkg.dependencies).concat(
@@ -129,7 +132,7 @@ export default {
     plugins: [
       resolve(),
       replace({
-        'process.browser': true,
+        'process.browser': 'true',
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       commonjs(),
