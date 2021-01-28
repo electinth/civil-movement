@@ -244,6 +244,10 @@ export function plot(
     `url(${new URL(`#arrow-${d.type}-muted`, location.toString())})`;
   const node_color_muted = (d) => color_player_muted(d.type);
   const mouseover = (event, d) => {
+    if (mode === 'mobile') {
+      return;
+    }
+
     link
       .attr('stroke', link_stroke_muted)
       .attr('marker-end', link_marker_muted);
@@ -282,7 +286,7 @@ export function plot(
     .call(drag())
     .on('mouseover', mouseover)
     .on('mouseout', mouseout)
-    .on('click', (_, d) => onClickNode(d));
+    .on('click', (_, d) => mode === 'desktop' && onClickNode(d));
 
   const delay = (d, i) => i * 15;
   link
