@@ -19,7 +19,7 @@
   <title>Civil Movement</title>
 </svelte:head>
 
-<div class="h-screen -mt-10 md:-mt-24 pt-10 md:pt-24 flex flex-col">
+<section class="flex flex-col">
   <div class="flex h-full flex-col bg-gradient-to-b from-mint-light to-mint">
     <div class="mx-auto text-center mt-8 z-10">
       <Typography as="h1" bold>651 เหตุการณ์</Typography>
@@ -57,4 +57,14 @@
   </div>
 
   <FlowerTimeline />
-</div>
+</section>
+
+<style>
+  section {
+    height: calc(100vh - 2.5rem);
+
+    @media (min-width: 768px) {
+      height: calc(100vh - 3rem);
+    }
+  }
+</style>

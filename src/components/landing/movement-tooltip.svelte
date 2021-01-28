@@ -23,7 +23,7 @@
 </script>
 
 <div
-  class="absolute"
+  class="absolute z-20"
   style="top: {node.offsetTop}px; left: {node.offsetLeft}px;"
 >
   <div
