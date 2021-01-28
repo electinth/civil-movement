@@ -6,6 +6,7 @@
   import { ORGANIZERS, KEY_TOPICS } from '../constants/filter';
   import type movements from '../assets/data/event_all.csv';
   import MovementDialog from '../components/landing/movement-dialog.svelte';
+  import InstructionDialog from '../components/landing/instruction-dialog.svelte';
 
   const filter = {
     organizers: ORGANIZERS.map(({ key }) => key),
@@ -19,7 +20,7 @@
   <title>Civil Movement</title>
 </svelte:head>
 
-<section class="flex flex-col">
+<section class="relative flex flex-col">
   <div class="flex h-full flex-col bg-gradient-to-b from-mint-light to-mint">
     <div class="mx-auto text-center mt-8 z-10">
       <Typography as="h1" bold>651 เหตุการณ์</Typography>
@@ -54,6 +55,8 @@
         on:close={() => (selectedMovement = null)}
       />
     {/if}
+
+    <InstructionDialog />
   </div>
 
   <FlowerTimeline />
