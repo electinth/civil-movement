@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   import FilterDropdown from '../components/landing/filter-dropdown.svelte';
   import FlowerTimeline from '../components/landing/flower-timeline.svelte';
   import FlowerVisualization from '../components/landing/flower-visualization.svelte';
@@ -9,6 +11,8 @@
   import InstructionDialog from '../components/landing/instruction-dialog.svelte';
   import InstructionButton from '../components/landing/instruction-button.svelte';
 
+  const IS_INSTRUCTION_SEEN_SESSTION_STORAGE_KEY = 'IS_INSTRUCTION_SEEN';
+
   const filter = {
     organizers: ORGANIZERS.map(({ key }) => key),
     keyTopics: KEY_TOPICS.map(({ key }) => key),
@@ -16,6 +20,19 @@
 
   let selectedMovement: typeof movements[number] = null;
   let isInstructionOpen: boolean = false;
+  let isInstructionSeen: boolean;
+
+  const closeInstructionAndMarkAsSeen = () => {
+    isInstructionOpen = false;
+    isInstructionSeen = true;
+    sessionStorage.setItem(IS_INSTRUCTION_SEEN_SESSTION_STORAGE_KEY, 'true');
+  };
+
+  onMount(() => {
+    isInstructionSeen = !!sessionStorage.getItem(
+      IS_INSTRUCTION_SEEN_SESSTION_STORAGE_KEY
+    );
+  });
 </script>
 
 <svelte:head>
@@ -61,7 +78,8 @@
       on:movement-click={({ detail }) => {
         selectedMovement = detail;
       }}
-      on:transition-complete={() => (isInstructionOpen = true)}
+      on:transition-complete={() =>
+        !isInstructionSeen && (isInstructionOpen = true)}
     />
 
     {#if selectedMovement}
@@ -72,7 +90,7 @@
     {/if}
 
     {#if isInstructionOpen}
-      <InstructionDialog on:close={() => (isInstructionOpen = false)} />
+      <InstructionDialog on:close={closeInstructionAndMarkAsSeen} />
     {/if}
   </div>
 
