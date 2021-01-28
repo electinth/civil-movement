@@ -26,7 +26,8 @@
   >
     <button
       class="absolute top-3 right-3 text-gray hover:text-black"
-      on:click={close}>
+      on:click={close}
+    >
       <svg
         width="16"
         height="17"
@@ -34,7 +35,8 @@
         fill="none"
         stroke="currentColor"
         stroke-width="2"
-        xmlns="http://www.w3.org/2000/svg">
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <line x1="0.707107" y1="1.29289" x2="14.7071" y2="15.2929" />
         <line x1="14.7071" y1="1.70711" x2="0.707107" y2="15.7071" />
       </svg>
@@ -49,7 +51,8 @@
             height="20"
             viewBox="0 0 19 20"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg">
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <g clip-path="url(#clip0)">
               <path d="M5 0.625H0V5.625H5V0.625Z" fill="#88FFCC" />
               <path
@@ -93,7 +96,8 @@
             height="20"
             viewBox="0 0 16 20"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg">
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M8.13892 14.5C12.143 14.5 15.3889 11.2541 15.3889 7.25C15.3889 3.24594 12.143 0 8.13892 0C4.13485 0 0.888916 3.24594 0.888916 7.25C0.888916 11.2541 4.13485 14.5 8.13892 14.5Z"
               fill="#88FFCC"
@@ -115,11 +119,11 @@
     <div class="space-y-6">
       <div class="space-y-2">
         <Typography as="h3" bold>ข้อเรียกร้อง</Typography>
-        <Typography as="pre">{movement.cause}</Typography>
+        <Typography as="pre">{movement.proposal}</Typography>
       </div>
       <div class="space-y-2">
         <Typography as="h3" bold>วัตถุประสงค์การชุมนุม</Typography>
-        <Typography as="pre">{movement.proposal}</Typography>
+        <Typography as="pre">{movement.cause}</Typography>
       </div>
     </div>
   </div>
