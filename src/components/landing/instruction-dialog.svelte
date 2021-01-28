@@ -1,4 +1,6 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+  import CloseButton from '../close-button.svelte';
   import Typography from '../typography.svelte';
 
   const organizerSymbols = [
@@ -7,11 +9,16 @@
     { label: 'พรรคการเมือง', image: '/images/player-03.png' },
     { label: 'รัฐบาล', image: '/images/player-04.png' },
   ];
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <div class="absolute inset-0 z-10">
   <div class="w-full h-full bg-gradient-to-b from-white to-mint opacity-95" />
   <div class="absolute inset-0 flex overflow-y-auto">
+    <div class="absolute top-2 right-2">
+      <CloseButton on:click={() => dispatch('close')} />
+    </div>
     <div
       class="flex flex-col text-center py-8 px-4 md:px-8 space-y-8 md:space-y-12 w-full max-w-4xl m-auto"
     >

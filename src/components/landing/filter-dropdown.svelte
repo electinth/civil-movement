@@ -20,12 +20,13 @@
   }
 </script>
 
-<div use:clickOutside={() => (isOpen = false)} class="w-28 md:w-36">
+<div use:clickOutside={() => (isOpen = false)} class="w-28 md:w-36 my-auto">
   <button
     on:click={() => (isOpen = !isOpen)}
     class={`flex flex-row px-2 py-1 space-x-2 rounded focus:outline-none w-full ${
       isOpen ? 'bg-white' : 'hover:bg-white hover:bg-opacity-50'
-    }`}>
+    }`}
+  >
     <div class="flex-1 text-left">
       <Typography as="subtitle4">
         {#if activeFilter.length === filter.length}
@@ -47,7 +48,8 @@
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       class="stroke-current my-auto transform transition-transform duration-100 ease-in-out"
-      class:rotate-180={isOpen}>
+      class:rotate-180={isOpen}
+    >
       <path d="M1 1L5 5L9 1" />
     </svg>
   </button>
