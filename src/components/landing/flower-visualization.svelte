@@ -47,6 +47,8 @@
     dispatch('movement-click', getMovementFromId(id));
   };
 
+  const onTransitionCompleted = () => dispatch('transition-complete');
+
   const reshapedMovements = reshapeData(movements);
 
   onMount(() => {
@@ -56,7 +58,8 @@
       stage,
       onMouseOverNode,
       onMouseOutOfNode,
-      onClickNode
+      onClickNode,
+      onTransitionCompleted
     );
   });
 </script>

@@ -1,5 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import { fade } from 'svelte/transition';
+
   import CloseButton from '../close-button.svelte';
   import Typography from '../typography.svelte';
 
@@ -13,7 +15,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="absolute inset-0 z-10">
+<div transition:fade class="absolute inset-0 z-10">
   <div class="w-full h-full bg-gradient-to-b from-white to-mint opacity-95" />
   <div class="absolute inset-0 flex overflow-y-auto">
     <div class="absolute top-2 right-2">

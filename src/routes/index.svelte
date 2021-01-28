@@ -61,6 +61,7 @@
       on:movement-click={({ detail }) => {
         selectedMovement = detail;
       }}
+      on:transition-complete={() => (isInstructionOpen = true)}
     />
 
     {#if selectedMovement}

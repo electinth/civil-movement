@@ -69,7 +69,8 @@ export function plot(
   stageElement,
   onMouseOverNode,
   onMouseOutOfNode,
-  onClickNode
+  onClickNode,
+  onNodeTransitionCompleted
 ) {
   const width = stageElement.clientWidth;
   const height = stageElement.clientHeight;
@@ -296,7 +297,19 @@ export function plot(
     .delay(delay)
     .duration(1500)
     .attr('opacity', 1);
-  node.transition().delay(delay).duration(1500).attr('r', node_radius);
+
+  let pendingNodeAnimation = node.size();
+
+  node
+    .transition()
+    .delay(delay)
+    .duration(1500)
+    .attr('r', node_radius)
+    .on('end', () =>
+      pendingNodeAnimation > 1
+        ? pendingNodeAnimation--
+        : onNodeTransitionCompleted()
+    );
 
   const d_arrow = (d) =>
     `M${bound_x(d.source.x)},${bound_y(d.source.y)} L${bound_x(
