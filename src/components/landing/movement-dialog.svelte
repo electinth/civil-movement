@@ -22,7 +22,7 @@
 <div class="absolute inset-0 my-32 z-20">
   <div
     use:clickOutside={close}
-    class="relative flex flex-col m-auto w-full max-w-3xl h-full bg-white rounded-xl p-8 shadow-lg overflow-y-auto"
+    class="relative flex flex-col m-auto w-full max-w-2xl h-full bg-white rounded-xl p-8 shadow-lg"
   >
     <button
       class="absolute top-3 right-3 text-gray hover:text-black"
@@ -116,7 +116,7 @@
       </div>
     </div>
 
-    <div class="space-y-6">
+    <div class="space-y-6 overflow-y-auto">
       <div class="space-y-2">
         <Typography as="h3" bold>ข้อเรียกร้อง</Typography>
         <Typography as="pre">{movement.proposal}</Typography>
