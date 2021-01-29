@@ -9,7 +9,9 @@
   $: accentColor = option.accentColor || '#1A171B';
 </script>
 
-<button class="flex flex-row text-left p-1 space-x-2" on:click>
+<button
+  class="flex flex-row text-left p-1 space-x-2 focus:outline-none"
+  on:click>
   <div
     class="border-2 border-black rounded-full my-auto w-4 h-4 text-center flex flex-col justify-center"
     style={`background-color: ${

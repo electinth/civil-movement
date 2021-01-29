@@ -1,9 +1,66 @@
 import * as d3 from 'd3';
 import * as d3ForceSampled from 'd3-force-sampled';
 
-const thai_date_from_string = (str) => {
-  const dmy = str.split('-');
-  return new Date(+dmy[2] - 543, +dmy[1] - 1, +dmy[0]);
+export const reshapeData = (data) => {
+  const node_sizes = {};
+  const nodes = [];
+  const links = [];
+  const stems = [];
+
+  data
+    .sort((a, b) => a.date.getMilliseconds() - b.date.getMilliseconds())
+    .forEach(
+      ({
+        date,
+        event_no,
+        player,
+        time_show,
+        x_desktop,
+        x_mobile,
+        y_desktop,
+        y_mobile,
+        pre_event,
+        reaction_type,
+      }) => {
+        const id = event_no;
+
+        let node = {
+          id: event_no,
+          date,
+          type: player,
+          time_show: time_show,
+          x_desktop,
+          x_mobile,
+          y_desktop,
+          y_mobile,
+        };
+
+        nodes.push(node);
+        node_sizes[id] = 1;
+
+        if (pre_event != '') {
+          let pres = pre_event.split(',');
+          for (let pre of pres) {
+            pre = pre.trim();
+            links.push({ source: pre, target: id, type: reaction_type });
+            node_sizes[pre]++;
+          }
+        }
+
+        stems.push({
+          date,
+          type: player,
+          shown: time_show === 1 || time_show === 2, // 1 for long line, 2 for short line
+        });
+      }
+    );
+
+  return {
+    node_sizes,
+    nodes,
+    links,
+    stems,
+  };
 };
 
 export function plot(
@@ -12,7 +69,8 @@ export function plot(
   stageElement,
   onMouseOverNode,
   onMouseOutOfNode,
-  onClickNode
+  onClickNode,
+  onNodeTransitionCompleted
 ) {
   const width = stageElement.clientWidth;
   const height = stageElement.clientHeight;
@@ -101,58 +159,41 @@ export function plot(
   append_marker('', (d) => color_reaction(d));
   append_marker('-muted', (d) => color_reaction_muted(d));
 
-  let node_sizes = {};
   const radius_from_id = (id) => Math.sqrt(node_sizes[id]);
 
-  // PROCESS DATA
-  let nodes = [];
-  let links = [];
-  let stems = [];
-  let stem_ids = [];
+  const { node_sizes, nodes: rawNodes, links, stems: rawStems } = data;
 
-  data.sort(
-    (a, b) =>
-      thai_date_from_string(a.date).getMilliseconds() -
-      thai_date_from_string(b.date).getMilliseconds()
-  );
-  data.forEach((d, i) => {
-    let id = d.event_no.trim();
-    let date = thai_date_from_string(d.date);
+  const nodes = rawNodes.map(
+    ({
+      date,
+      time_show,
+      x_desktop,
+      x_mobile,
+      y_desktop,
+      y_mobile,
+      ...node
+    }) => {
+      const positions = { x_desktop, x_mobile, y_desktop, y_mobile };
 
-    let node = {
-      id: id,
-      date: date,
-      name: d.event_name,
-      type: +d.player,
-      x: d['x_' + mode]
-        ? ((+d['x_' + mode] - 50) * width) / 100
-        : time_x(date) + Math.random(),
-      y: d['y_' + mode]
-        ? ((50 - +d['y_' + mode]) * height) / 100
-        : +d.time_show === 2
-        ? height / 3
-        : Math.random(),
-    };
-    nodes.push(node);
-    node_sizes[id] = 1;
-
-    if (d.pre_event != '') {
-      let pres = d.pre_event.split(',');
-      for (let pre of pres) {
-        pre = pre.trim();
-        links.push({ source: pre, target: id, type: +d.reaction_type });
-        node_sizes[pre]++;
-      }
+      return {
+        ...node,
+        x: positions['x_' + mode]
+          ? ((positions['x_' + mode] - 50) * width) / 100
+          : time_x(date) + Math.random(),
+        y: positions['y_' + mode]
+          ? ((50 - positions['y_' + mode]) * height) / 100
+          : time_show === 2
+          ? height / 3
+          : Math.random(),
+      };
     }
+  );
 
-    stems.push({
-      source: { x: time_x(date), y: height / 2 },
-      target: node,
-      type: +d.player,
-      shown: +d.time_show === 1 || +d.time_show === 2, // 1 for long line, 2 for short line
-    });
-    stem_ids.push(id);
-  });
+  const stems = rawStems.map(({ date, ...stem }, index) => ({
+    ...stem,
+    target: nodes[index],
+    source: { x: time_x(date), y: height / 2 },
+  }));
 
   const force_distance = (d) =>
     (radius_from_id(d.source.id) + radius_from_id(d.target.id)) * node_radius +
@@ -203,6 +244,10 @@ export function plot(
     `url(${new URL(`#arrow-${d.type}-muted`, location.toString())})`;
   const node_color_muted = (d) => color_player_muted(d.type);
   const mouseover = (event, d) => {
+    if (mode === 'mobile') {
+      return;
+    }
+
     link
       .attr('stroke', link_stroke_muted)
       .attr('marker-end', link_marker_muted);
@@ -234,13 +279,14 @@ export function plot(
     .data(nodes)
     .join('circle')
     .classed('node', true)
+    .classed('cursor-pointer', true)
     .attr('fill', node_color)
     .attr('cx', cx)
     .attr('cy', cy)
     .call(drag())
     .on('mouseover', mouseover)
     .on('mouseout', mouseout)
-    .on('click', (_, d) => onClickNode(d));
+    .on('click', (_, d) => mode === 'desktop' && onClickNode(d));
 
   const delay = (d, i) => i * 15;
   link
@@ -255,7 +301,19 @@ export function plot(
     .delay(delay)
     .duration(1500)
     .attr('opacity', 1);
-  node.transition().delay(delay).duration(1500).attr('r', node_radius);
+
+  let pendingNodeAnimation = node.size();
+
+  node
+    .transition()
+    .delay(delay)
+    .duration(1500)
+    .attr('r', node_radius)
+    .on('end', () =>
+      pendingNodeAnimation > 1
+        ? pendingNodeAnimation--
+        : onNodeTransitionCompleted()
+    );
 
   const d_arrow = (d) =>
     `M${bound_x(d.source.x)},${bound_y(d.source.y)} L${bound_x(
@@ -267,6 +325,7 @@ export function plot(
     .target((d) => d.target)
     .x((d) => bound_x(d.x))
     .y((d) => bound_y(d.y));
+
   simulation.on('tick', () => {
     link.attr('d', d_arrow);
     stem.attr('d', d_stem);

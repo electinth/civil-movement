@@ -1,85 +1,73 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { plot } from '../../utils/flower-d3';
-  import Typography from '../typography.svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
 
+  import { reshapeData, plot } from '../../utils/flower-d3';
   import movements from '../../assets/data/event_all.csv';
+  import MovementTooltip from './movement-tooltip.svelte';
+  import type { MovementNodeWithData } from './movement-tooltip.svelte';
 
   interface Filter {
     organizers: string[];
     keyTopics: string[];
   }
 
-  interface Node {
-    name: string;
-    date: Date;
+  interface EventNode {
+    id: string;
     x: number;
     y: number;
-    offsetLeft: number;
-    offsetTop: number;
-    tooltipRight: boolean;
   }
 
   export let filter: Filter;
 
   let stage: SVGSVGElement;
-  let focusingNode: Node;
+  let focusingNode: MovementNodeWithData;
 
-  const onMouseOverNode = (pointData: Node) => {
-    const offsetLeft = Math.round(pointData.x + stage.clientWidth / 2);
-    const offsetTop = Math.round(pointData.y + stage.clientHeight / 2);
+  const dispatch = createEventDispatcher();
+
+  const getMovementFromId = (id: string) =>
+    movements.find(({ event_no }) => event_no === id);
+
+  const onMouseOverNode = ({ x, y, id }: EventNode): void => {
+    const offsetLeft = Math.round(x + stage.clientWidth / 2);
+    const offsetTop = Math.round(y + stage.clientHeight / 2);
+
     focusingNode = {
-      ...pointData,
+      data: getMovementFromId(id),
       offsetLeft,
       offsetTop,
       tooltipRight: offsetLeft < stage.clientWidth / 2,
     };
   };
 
-  const onMouseOutOfNode = () => {
+  const onMouseOutOfNode = (): void => {
     focusingNode = null;
   };
 
-  const onClickNode = (pointData: Node) => {
-    console.log(pointData);
+  const onClickNode = ({ id }: EventNode): void => {
+    dispatch('movement-click', getMovementFromId(id));
   };
 
-  const formatDate = (date: Date) =>
-    new Date(date).toLocaleDateString('th-TH', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+  const onTransitionCompleted = () => dispatch('transition-complete');
 
-  onMount(() =>
+  const reshapedMovements = reshapeData(movements);
+
+  onMount(() => {
     plot(
-      movements,
+      reshapedMovements,
       filter,
       stage,
       onMouseOverNode,
       onMouseOutOfNode,
-      onClickNode
-    )
-  );
+      onClickNode,
+      onTransitionCompleted
+    );
+  });
 </script>
 
 <div class="relative flex-1">
   <svg bind:this={stage} class="w-full h-full" />
 
   {#if focusingNode}
-    <div
-      class="absolute"
-      style="top: {focusingNode.offsetTop}px; left: {focusingNode.offsetLeft}px;"
-    >
-      <div
-        class="absolute bottom-2 {focusingNode.tooltipRight
-          ? 'left-1'
-          : 'right-1'} w-48 break-words bg-black bg-opacity-50 text-white p-2 rounded"
-      >
-        <Typography as="subtitle5" bold>{focusingNode.name}</Typography>
-        <Typography as="subtitle5">{formatDate(focusingNode.date)}</Typography>
-      </div>
-    </div>
+    <MovementTooltip node={focusingNode} />
   {/if}
 </div>

@@ -10,8 +10,9 @@
 
   type Body = 'body1' | 'body2';
 
-  export let as: Heading | Subtitle | Body;
+  export let as: Heading | Subtitle | Body | 'pre';
   export let bold = false;
+  export let indented = false;
 
   $: extraClass = $$props.class || '';
 
@@ -70,12 +71,27 @@
   >
     <slot />
   </h5>
+{:else if as === 'pre'}
+  <pre
+    class="{getSubtitleOrBodyClasses(
+      'body1'
+    )} break-words whitespace-pre-wrap {extraClass}"
+    class:font-bold={bold}>
+    <slot />
+  </pre>
 {:else}
   <p
     class="font-subtitle {getSubtitleOrBodyClasses(as)} {extraClass}"
     class:font-semibold={as.includes('subtitle') && bold}
     class:font-bold={as.includes('body') && bold}
+    class:indented
   >
     <slot />
   </p>
 {/if}
+
+<style>
+  .indented {
+    text-indent: 3rem;
+  }
+</style>
