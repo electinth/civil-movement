@@ -1,14 +1,6 @@
 <script lang="ts">
-  import {
-    curveCatmullRom,
-    extent,
-    line,
-    max,
-    ScaleLinear,
-    scaleLinear,
-    ScaleTime,
-    scaleTime,
-  } from 'd3';
+  import { curveCatmullRom, line, scaleLinear, scaleTime } from 'd3';
+  import type { ScaleLinear, ScaleTime } from 'd3';
   import type { TData } from '../utils/formatMovementToLinedata';
 
   export let data: TData[] = [];

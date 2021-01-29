@@ -4,7 +4,8 @@
   import movements from '../../assets/data/event_all.csv';
   import Linechart from '../linechart.svelte';
   import formatMovementData from '../../utils/formatMovementToLinedata';
-  import { extent, max, scaleLinear, scaleTime } from 'd3';
+  import { extent, max, scaleLinear, scaleTime, timeDay } from 'd3';
+  import * as d3 from 'd3';
 
   const linedata = formatMovementData(movements);
   let width = 1000,
@@ -18,7 +19,7 @@
     .range([margin.left, width - margin.right]);
 
   let values = [0, 5];
-  const timelineRanges = linedata.map((d) => d.x);
+  // const timelineRanges = linedata.map((d) => d.x);
 </script>
 
 <div class="relative" bind:clientWidth={width}>
