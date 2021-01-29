@@ -22,7 +22,10 @@
     const monthyear = [...new Set(monthyears)].map((monthyear) => {
       const [month, year] = monthyear.split('-');
 
-      return `${thmonth[month]} ${+year + 543}`;
+      return {
+        monthyear: `${thmonth[month]} ${+year + 543}`,
+        date: new Date(+year, +month, 1),
+      };
     });
 
     return monthyear;
@@ -114,17 +117,17 @@
 
 <div
   id="rangeSlider"
-  class="w-full h-full flex bg-white relative"
+  class="w-full h-14 flex bg-white relative"
   bind:clientWidth={width}
   bind:clientHeight={height}
   bind:this={slider}
 >
-  {#each divider as month}
+  {#each divider as { monthyear, date }}
     <div
-      class="section text-center border-r-2 my-3 border-gray"
-      style="flex: 0 0 {dividerSize}px;"
+      class="section text-center border-l-2 my-3 bg-white border-gray absolute"
+      style="left: {X(date)}px;"
     >
-      {month}
+      {monthyear}
     </div>
   {/each}
   <div
