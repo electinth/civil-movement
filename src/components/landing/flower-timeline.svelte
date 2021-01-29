@@ -18,18 +18,21 @@
     .domain(extent(linedata, (d) => d.x))
     .range([margin.left, width - margin.right]);
 
-  let values = [0, 50];
+  let values = [0, 0];
   // const timelineRanges = linedata.map((d) => d.x);
 </script>
 
-<div class="relative" bind:clientWidth={width}>
-  <div
-    class="absolute w-full pointer-events-none"
-    style="transform: translate(0, -100%);"
-  >
-    <Linechart data={linedata} {Y} {X} />
+<div class="flex">
+  <div class="flex-1">
+    <div class="relative" bind:clientWidth={width}>
+      <div
+        class="absolute w-full pointer-events-none"
+        style="transform: translate(0, -100%);"
+      >
+        <Linechart data={linedata} {Y} {X} />
+      </div>
+      <Timeline bind:values {X} />
+    </div>
   </div>
-  <div class="">
-    <Timeline bind:values {X} />
-  </div>
+  <div class="w-10 bg-mint flex items-center justify-center">&gt;</div>
 </div>
