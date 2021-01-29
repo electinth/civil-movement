@@ -7,6 +7,7 @@
   // slider state
   let handleActivated = false,
     activeHandleIndex = 0;
+  let slider, width: number, height: number;
 
   export let X: ScaleTime<number, number, never>;
   $: rangesItem = X.ticks(d3.timeDay.every(1));
@@ -19,21 +20,41 @@
       (date) => `${date.getMonth()}-${date.getFullYear()}`
     );
 
-    const monthyear = [...new Set(monthyears)].map((monthyear) => {
-      const [month, year] = monthyear.split('-');
+    const monthyear = [...new Set(monthyears)].reduce(
+      (divider, monthyear, curIdx, monthyears) => {
+        const [month, year] = monthyear.split('-');
+        const date = new Date(+year, +month, 1);
+        const label = `${thmonth[+month]} ${+year + 543}`;
 
-      return {
-        monthyear: `${thmonth[month]} ${+year + 543}`,
-        date: new Date(+year, +month, 1),
-      };
-    });
+        const nextMonthyear = monthyears[curIdx + 1];
+
+        const position = X(date);
+
+        let divWidth = width - position;
+        if (nextMonthyear) {
+          const [nextmonth, nextyear] = nextMonthyear.split('-'),
+            nextDate = new Date(+nextyear, +nextmonth);
+          const nextPosition = nextMonthyear ? X(nextDate) : X.range()[1];
+
+          divWidth = nextPosition - position;
+        }
+
+        const div = {
+          date,
+          label,
+          divWidth,
+          position,
+        };
+
+        return [...divider, div];
+      },
+      []
+    );
 
     return monthyear;
   })();
 
-  let slider, width: number, height: number;
-
-  export let values = [0, 50];
+  export let values = [0, 100];
   $: [start, end] = values;
   $: console.log('values::', values);
 
@@ -117,17 +138,17 @@
 
 <div
   id="rangeSlider"
-  class="w-full h-14 flex bg-white relative"
+  class="w-full h-12 flex bg-white relative"
   bind:clientWidth={width}
   bind:clientHeight={height}
   bind:this={slider}
 >
-  {#each divider as { monthyear, date }}
+  {#each divider as { label, divWidth, position }}
     <div
-      class="section text-center border-l-2 my-3 bg-white border-gray absolute"
-      style="left: {X(date)}px;"
+      class="section text-center border-l-2 my-3 bg-white border-gray absolute whitespace-nowrap"
+      style="left: {position}px; width: {divWidth}px;"
     >
-      {monthyear}
+      {label}
     </div>
   {/each}
   <div

@@ -18,7 +18,7 @@
     .domain(extent(linedata, (d) => d.x))
     .range([margin.left, width - margin.right]);
 
-  let values = [0, 5];
+  let values = [0, 50];
   // const timelineRanges = linedata.map((d) => d.x);
 </script>
 
