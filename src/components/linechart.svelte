@@ -75,5 +75,15 @@
       fill="url(#whiteGradient)"
       class="stroke-current text-white"
     />
+
+    <!-- tooltip -->
+    <g
+      transform={`translate(${width / 2}, ${margin.top / 2})`}
+      class="text-mint stroke-current fill-current"
+    >
+      <!-- svelte-ignore component-name-lowercase -->
+      <line y2={height - margin.top / 2 - margin.bottom / 2} stroke-width={2} />
+      <circle r={5} />
+    </g>
   </svg>
 </div>

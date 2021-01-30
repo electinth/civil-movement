@@ -24,7 +24,7 @@
 <div
   class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-dark to-mint-light via-mint py-24"
 >
-  <Typography as="h1" class="text-center">
+  <Typography as="h1" class="text-center text-white">
     สรุปภาพรวม<br />
     Civil Movement 2020
   </Typography>
