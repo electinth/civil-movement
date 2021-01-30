@@ -12,10 +12,10 @@
   let width = 1000,
     lcHeight = 300,
     margin = { top: 0, right: 0, bottom: 0, left: 0 };
-  const Y = scaleLinear().domain([0, max(linedata, (d) => d.y)]);
-  $: Y.range([lcHeight - margin.bottom, margin.top]);
-  const X = scaleTime().domain(extent(linedata, (d) => d.x));
-  $: X.range([margin.left, width - margin.right]);
+  let Y = scaleLinear().domain([0, max(linedata, (d) => d.y)]);
+  $: Y = Y.range([lcHeight - margin.bottom, margin.top]);
+  let X = scaleTime().domain(extent(linedata, (d) => d.x));
+  $: X = X.range([margin.left, width - margin.right]);
 
   let values = [0, 0];
 
@@ -34,6 +34,7 @@
       <div
         class="absolute w-full pointer-events-none"
         style="transform: translate(0, -100%);"
+        bind:clientHeight={lcHeight}
       >
         <Linechart data={linedata} {Y} {X} />
       </div>

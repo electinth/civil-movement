@@ -22,44 +22,46 @@
 
 <div class="w-full h-full">
   <svg class="h-full w-full">
-    <!-- x - axis -->
-    <g
-      transform={`translate(0, ${height - margin.bottom})`}
-      class="fill-current text-blue-light"
-      font-size={12}
-    >
-      {#each X.domain() as tick}
-        <g transform={`translate(${X(tick)}, 14)`}>
-          <text>
-            {thmonth[tick.getMonth()]}
-          </text>
-          <text y={16}>
-            {tick.getFullYear() + 543}
-          </text>
-        </g>
-      {/each}
-    </g>
+    {#if axis}
+      <!-- x - axis -->
+      <g
+        transform={`translate(0, ${height - margin.bottom})`}
+        class="fill-current text-blue-light"
+        font-size={12}
+      >
+        {#each X.domain() as tick}
+          <g transform={`translate(${X(tick)}, 14)`}>
+            <text>
+              {thmonth[tick.getMonth()]}
+            </text>
+            <text y={16}>
+              {tick.getFullYear() + 543}
+            </text>
+          </g>
+        {/each}
+      </g>
 
-    <!-- y - axis -->
-    <g
-      transform={`translate(${margin.left}, 0)`}
-      class="fill-current text-blue-light stroke-current"
-      font-size={14}
-    >
-      {#each Y.ticks(5) as tick}
-        <g transform={`translate(0, ${Y(tick)})`}>
-          <!-- svelte-ignore component-name-lowercase -->
-          <line
-            x2={width}
-            stroke-width={1}
-            stroke-dasharray={tick ? '3, 3' : null}
-          />
-          {#if tick}
-            <text y={10} dominant-baseline={'hanging'}>{tick}</text>
-          {/if}
-        </g>
-      {/each}
-    </g>
+      <!-- y - axis -->
+      <g
+        transform={`translate(${margin.left}, 0)`}
+        class="fill-current text-blue-light stroke-current"
+        font-size={14}
+      >
+        {#each Y.ticks(5) as tick}
+          <g transform={`translate(0, ${Y(tick)})`}>
+            <!-- svelte-ignore component-name-lowercase -->
+            <line
+              x2={width}
+              stroke-width={1}
+              stroke-dasharray={tick ? '3, 3' : null}
+            />
+            {#if tick}
+              <text y={10} dominant-baseline={'hanging'}>{tick}</text>
+            {/if}
+          </g>
+        {/each}
+      </g>
+    {/if}
 
     <defs>
       <linearGradient id="whiteGradient" gradientTransform="rotate(90)">
