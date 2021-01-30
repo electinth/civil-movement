@@ -160,7 +160,7 @@
     <div
       id="handle-{index}"
       class="absolute h-full cursor-handle"
-      style="left: {stepSize * (value - 0.25)}px; width: {dividerSize / 2}px;"
+      style="left: {stepSize * (value - 0.25)}px; width: {stepSize}px;"
       on:mousedown={sliderInteractStart}
       on:mouseup={sliderInteractEnd}
       on:blur={sliderBlurHandle}
