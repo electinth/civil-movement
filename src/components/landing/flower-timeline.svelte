@@ -6,6 +6,7 @@
   import formatMovementData from '../../utils/formatMovementToLinedata';
   import { extent, max, scaleLinear, scaleTime, timeDay } from 'd3';
   import * as d3 from 'd3';
+  import PlayButton from '../play-button.svelte';
 
   const linedata = formatMovementData(movements);
   let width = 1000,
@@ -43,5 +44,7 @@
       <Timeline bind:values {X} />
     </div>
   </div>
-  <div class="w-10 bg-mint flex items-center justify-center">&gt;</div>
+  <div class="w-10">
+    <PlayButton />
+  </div>
 </div>
