@@ -20,7 +20,7 @@
     height = 500,
     margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
-  let date = new Date(2020, 6, 1);
+  let tooltipdata = { x: new Date(2020, 6, 1), y: 0 };
 
   export let axis = false;
 
@@ -35,7 +35,7 @@
     const domain = data.map((d) => d.x);
     const step = (X.range()[1] - X.range()[0]) / domain.length;
     const snapDate = domain[bisect(domain, X.invert(xPos - step / 2))];
-    if (snapDate) date = snapDate;
+    if (snapDate) tooltipdata = data.find((d) => d.x === snapDate);
   }
 </script>
 
@@ -95,14 +95,33 @@
       class="stroke-current text-white"
     />
 
-    <!-- tooltip -->
-    <g
-      transform={`translate(${X(date)}, ${margin.top / 2})`}
-      class="text-mint stroke-current fill-current"
-    >
-      <!-- svelte-ignore component-name-lowercase -->
-      <line y2={height - margin.top / 2 - margin.bottom / 2} stroke-width={2} />
-      <circle r={5} />
-    </g>
+    {#if axis}
+      <!-- tooltip -->
+      <g
+        transform={`translate(${X(tooltipdata.x)}, ${0})`}
+        class="text-mint stroke-current fill-current"
+        font-size={12}
+      >
+        <text text-anchor="middle" y={15}>{tooltipdata.y} ครั้ง</text>
+        <!-- svelte-ignore component-name-lowercase -->
+        <g transform={`translate(0, 30)`}>
+          <line
+            y2={height - margin.top / 2 - margin.bottom / 2}
+            stroke-width={2}
+          />
+          <circle r={5} />
+        </g>
+
+        <text
+          y={height - margin.bottom / 2 + 10}
+          text-anchor="middle"
+          dominant-baseline="hanging"
+        >
+          {tooltipdata.x.getDate()}{' '}
+          {thmonth[tooltipdata.x.getMonth()]}{' '}
+          {tooltipdata.x.getFullYear() + 543}
+        </text>
+      </g>
+    {/if}
   </svg>
 </div>

@@ -8,9 +8,9 @@
   import formatMovementData from '../utils/formatMovementToLinedata';
 
   const linedata = formatMovementData(movements);
-  let width = 1000,
-    lcHeight = 300,
-    margin = { top: 30, right: 30, bottom: 30, left: 30 };
+  let width = 672,
+    lcHeight = 320,
+    margin = { top: 50, right: 30, bottom: 50, left: 30 };
   $: Y = d3
     .scaleLinear()
     .domain([0, d3.max(linedata, (d) => d.y)])
@@ -29,7 +29,7 @@
     Civil Movement 2020
   </Typography>
   <div
-    class="w-full max-w-2xl h-60"
+    class="w-full max-w-2xl h-80"
     bind:clientWidth={width}
     bind:clientHeight={lcHeight}
   >
