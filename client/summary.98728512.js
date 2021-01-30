@@ -1,1 +1,0 @@
-import{S as s,a,s as r,h as e,u as t,c,d as u,v as n,e as o,g as l,n as m,L as i}from"./client.18079fbc.js";function p(s){let a,r;return{c(){a=e("div"),r=t("summary page")},l(s){a=c(s,"DIV",{});var e=u(a);r=n(e,"summary page"),e.forEach(o)},m(s,e){l(s,a,e),m(a,r)},p:i,i:i,o:i,d(s){s&&o(a)}}}export default class extends s{constructor(s){super(),a(this,s,null,p,r,{})}}
