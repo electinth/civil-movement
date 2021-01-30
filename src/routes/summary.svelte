@@ -10,11 +10,15 @@
   const linedata = formatMovementData(movements);
   let width = 1000,
     lcHeight = 300,
-    margin = { top: 0, right: 0, bottom: 0, left: 0 };
-  const Y = d3.scaleLinear().domain([0, d3.max(linedata, (d) => d.y)]);
-  $: Y.range([lcHeight - margin.bottom, margin.top]);
-  const X = d3.scaleTime().domain(d3.extent(linedata, (d) => d.x));
-  $: X.range([margin.left, width - margin.right]);
+    margin = { top: 30, right: 30, bottom: 30, left: 30 };
+  $: Y = d3
+    .scaleLinear()
+    .domain([0, d3.max(linedata, (d) => d.y)])
+    .range([lcHeight - margin.bottom, margin.top]);
+  $: X = d3
+    .scaleTime()
+    .domain(d3.extent(linedata, (d) => d.x))
+    .range([margin.left, width - margin.right]);
 </script>
 
 <div
@@ -24,7 +28,19 @@
     สรุปภาพรวม<br />
     Civil Movement 2020
   </Typography>
-  <div class="w-full max-w-2xl" bind:clientWidth={width}>
-    <Linechart data={linedata} {X} {Y} />
+  <div
+    class="w-full max-w-2xl h-60"
+    bind:clientWidth={width}
+    bind:clientHeight={lcHeight}
+  >
+    <Linechart
+      data={linedata}
+      {width}
+      height={lcHeight}
+      {margin}
+      {X}
+      {Y}
+      axis
+    />
   </div>
 </div>
