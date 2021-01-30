@@ -56,7 +56,6 @@
 
   export let values = [0, 100];
   $: [start, end] = values;
-  $: console.log('values::', values);
 
   $: dividerSize = width / divider.length;
   $: stepSize = width / ranges.length;

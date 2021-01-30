@@ -20,16 +20,12 @@
   let values = [0, 0];
 
   const ranges = X.ticks(d3.timeDay.every(1));
-  const months = ranges.filter((d) => d.getDate() === 1);
 
-  let i = 0;
-  const t = d3.interval(() => {
-    const curMonth = months[i++];
-    const newIdx = ranges.findIndex((d) => d === curMonth);
-
-    if (i > months.length) t.stop();
-    values = newIdx !== -1 ? [0, newIdx] : [0, ranges.length];
-  }, 1000);
+  // let i = 0;
+  // const t = d3.interval(() => {
+  //   if (i > ranges.length) t.stop();
+  //   values = [0, i++];
+  // }, 10);
 </script>
 
 <div class="flex">
@@ -45,6 +41,6 @@
     </div>
   </div>
   <div class="w-10">
-    <PlayButton />
+    <PlayButton bind:values max={ranges.length} />
   </div>
 </div>
