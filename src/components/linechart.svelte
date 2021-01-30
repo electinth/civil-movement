@@ -70,7 +70,7 @@
           <g transform={`translate(0, ${Y(tick)})`}>
             <!-- svelte-ignore component-name-lowercase -->
             <line
-              x2={width}
+              x2={width - margin.left - margin.right}
               stroke-width={1}
               stroke-dasharray={tick ? '3, 3' : null}
             />
