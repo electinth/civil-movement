@@ -1,5 +1,13 @@
 <script lang="ts">
-  import { curveCatmullRom, line, scaleLinear, scaleTime, ticks } from 'd3';
+  import {
+    bisect,
+    curveCatmullRom,
+    line,
+    scaleLinear,
+    scaleTime,
+    ticks,
+    timeParse,
+  } from 'd3';
   import type { ScaleLinear, ScaleTime } from 'd3';
   import type { TData } from '../utils/formatMovementToLinedata';
   import thmonth from '../utils/thmonth';
@@ -12,15 +20,26 @@
     height = 500,
     margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
+  let date = new Date(2020, 6, 1);
+
   export let axis = false;
 
   $: pathDef = line<TData>()
     .x((d) => X(d.x))
     .y((d) => Y(d.y))
     .curve(curveCatmullRom);
+
+  function snap(e) {
+    console.log('snap');
+    const xPos = e.offsetX;
+    const domain = data.map((d) => d.x);
+    const step = (X.range()[1] - X.range()[0]) / domain.length;
+    const snapDate = domain[bisect(domain, X.invert(xPos - step / 2))];
+    if (snapDate) date = snapDate;
+  }
 </script>
 
-<div class="w-full h-full">
+<div class="w-full h-full" on:mousemove={snap}>
   <svg class="h-full w-full">
     {#if axis}
       <!-- x - axis -->
@@ -78,7 +97,7 @@
 
     <!-- tooltip -->
     <g
-      transform={`translate(${width / 2}, ${margin.top / 2})`}
+      transform={`translate(${X(date)}, ${margin.top / 2})`}
       class="text-mint stroke-current fill-current"
     >
       <!-- svelte-ignore component-name-lowercase -->
