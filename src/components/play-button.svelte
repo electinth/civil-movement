@@ -1,5 +1,7 @@
 <script lang="ts">
   import * as d3 from 'd3';
+  import Pause from './icons/pause.svelte';
+  import Play from './icons/play.svelte';
 
   export let values = [0, 0];
   export let max: number = 150;
@@ -24,5 +26,9 @@
     isPlaying = !isPlaying;
   }}
 >
-  {isPlaying ? '||' : '>'}
+  {#if isPlaying}
+    <Pause />
+  {:else}
+    <Play />
+  {/if}
 </div>
