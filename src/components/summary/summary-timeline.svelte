@@ -52,6 +52,14 @@
 <div class="w-full h-full relative">
   <Timeline {X} slide={false} />
   <div
+    class="absolute top-0 -right-8 w-8 h-14"
+    style="background: linear-gradient(to left, transparent, white);"
+  />
+  <div
+    class="absolute top-0 -left-8 w-8 h-14"
+    style="background: linear-gradient(to right, transparent, white);"
+  />
+  <div
     class="absolute w-full top-full h-96"
     bind:clientHeight={height}
     bind:clientWidth={width}
