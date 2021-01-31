@@ -112,7 +112,7 @@
   <Topic>
     <TopicHead>ความเคลื่อนไหวแบ่งเป็น 4 ช่วงหลัก ๆ</TopicHead>
   </Topic>
-  <div class="w-full max-w-5xl">
+  <div class="w-full max-w-5xl mb-96">
     <SummaryTimeline />
   </div>
   <!-- placeholder -->

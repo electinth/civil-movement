@@ -100,13 +100,9 @@
                 {d.label}
               </div>
             </foreignObject>
-            <!-- <text 
-              {d.label}
-            </text> -->
           </g>
         </g>
       {/each}
     </svg>
-    <div style="height: 1000px; background: rgba(0, 0, 0,  0.2);" />
   </div>
 </div>
