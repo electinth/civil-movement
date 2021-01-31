@@ -10,6 +10,7 @@
   import Topic from '../components/summary/topic.svelte';
   import TopicHead from '../components/summary/TopicHead.svelte';
   import TopicParagraph from '../components/summary/TopicParagraph.svelte';
+  import SummaryTimeline from '../components/summary/summary-timeline.svelte';
 
   const linedata = formatMovementData(movements);
   let width = 1024,
@@ -21,7 +22,7 @@
     .range([lcHeight - margin.bottom, margin.top]);
   $: X = d3
     .scaleTime()
-    .domain(d3.extent(linedata, (d) => d.x))
+    .domain([new Date(2019, 11, 1), d3.max(linedata, (d) => d.x)])
     .range([margin.left, width - margin.right]);
 </script>
 
@@ -111,6 +112,9 @@
   <Topic>
     <TopicHead>ความเคลื่อนไหวแบ่งเป็น 4 ช่วงหลัก ๆ</TopicHead>
   </Topic>
+  <div class="w-full max-w-5xl">
+    <SummaryTimeline />
+  </div>
   <!-- placeholder -->
   <div style="height: 7000px;" />
 </div>
