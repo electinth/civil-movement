@@ -14,7 +14,10 @@
     margin = { top: 0, right: 0, bottom: 0, left: 0 };
   let Y = scaleLinear().domain([0, max(linedata, (d) => d.y)]);
   $: Y = Y.range([lcHeight - margin.bottom, margin.top]);
-  let X = scaleTime().domain(extent(linedata, (d) => d.x));
+  let X = scaleTime().domain([
+    new Date(2019, 11, 1),
+    d3.max(linedata, (d) => d.x),
+  ]);
   $: X = X.range([margin.left, width - margin.right]);
 
   let values = [0, 0];
