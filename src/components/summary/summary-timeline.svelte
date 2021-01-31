@@ -16,5 +16,5 @@
 </script>
 
 <div class="w-full h-full" bind:clientHeight={height} bind:clientWidth={width}>
-  <Timeline {X} />
+  <Timeline {X} slide={false} />
 </div>

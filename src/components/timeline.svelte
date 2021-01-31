@@ -9,6 +9,7 @@
     activeHandleIndex = 0;
   let slider, width: number, height: number;
 
+  export let slide = true;
   export let X: ScaleTime<number, number, never>;
   $: rangesItem = X.ticks(d3.timeDay.every(1));
   $: ranges = [...Array(rangesItem.length).keys()];
@@ -150,33 +151,35 @@
       {label}
     </div>
   {/each}
-  <div
-    id="overlay"
-    class="absolute bg-mint h-full opacity-25 pointer-events-none"
-    style="left: {stepSize * start}px; width: {stepSize *
-      (end - start)}px; mix-blend-mode: multiply;"
-  />
-  {#each values as value, index}
+  {#if slide}
     <div
-      id="handle-{index}"
-      class="absolute h-full cursor-handle"
-      style="left: {stepSize * (value - 0.25)}px; width: {stepSize}px;"
-      on:mousedown={sliderInteractStart}
-      on:mouseup={sliderInteractEnd}
-      on:blur={sliderBlurHandle}
-    >
-      {#if handleActivated}
-        <div
-          class="absolute top-0 text-center bg-white p-1"
-          style="transform: translate(-50%, -100%);"
-        >
-          <Typography as="subtitle5" class="whitespace-nowrap"
-            >{tooltipFormatter(rangesItem[value])}</Typography
+      id="overlay"
+      class="absolute bg-mint h-full opacity-25 pointer-events-none"
+      style="left: {stepSize * start}px; width: {stepSize *
+        (end - start)}px; mix-blend-mode: multiply;"
+    />
+    {#each values as value, index}
+      <div
+        id="handle-{index}"
+        class="absolute h-full cursor-handle"
+        style="left: {stepSize * (value - 0.25)}px; width: {stepSize}px;"
+        on:mousedown={sliderInteractStart}
+        on:mouseup={sliderInteractEnd}
+        on:blur={sliderBlurHandle}
+      >
+        {#if handleActivated}
+          <div
+            class="absolute top-0 text-center bg-white p-1"
+            style="transform: translate(-50%, -100%);"
           >
-        </div>
-      {/if}
-    </div>
-  {/each}
+            <Typography as="subtitle5" class="whitespace-nowrap"
+              >{tooltipFormatter(rangesItem[value])}</Typography
+            >
+          </div>
+        {/if}
+      </div>
+    {/each}
+  {/if}
 </div>
 
 <svelte:window on:mousemove={bodyInteract} on:mouseup={bodyMouseUp} />
