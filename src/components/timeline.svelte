@@ -25,7 +25,8 @@
       (divider, monthyear, curIdx, monthyears) => {
         const [month, year] = monthyear.split('-');
         const date = new Date(+year, +month, 1);
-        const label = `${thmonth[+month]} ${+year + 543}`;
+        let label = `${thmonth[+month]}`;
+        if (curIdx <= 1) label = `${+year} ${label}`;
 
         const nextMonthyear = monthyears[curIdx + 1];
 
@@ -138,14 +139,14 @@
 
 <div
   id="rangeSlider"
-  class="w-full h-12 flex bg-white relative"
+  class="w-full h-14 flex bg-white relative"
   bind:clientWidth={width}
   bind:clientHeight={height}
   bind:this={slider}
 >
   {#each divider as { label, divWidth, position }}
     <div
-      class="section text-center border-l-2 my-3 bg-white border-gray absolute whitespace-nowrap"
+      class="section text-center border-l-2 my-5 bg-white border-gray absolute whitespace-nowrap font-subtitle text-12"
       style="left: {position}px; width: {divWidth}px;"
     >
       {label}
