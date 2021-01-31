@@ -43,6 +43,9 @@ module.exports = {
       'mint-light': '#BFFFFB',
       'blue-light': '#0A98FF',
       'blue-dark': '#0000CD',
+      party: '#FF7A00',
+      youth: '#ffffff',
+      people: '#C1B1F0',
     },
     extend: {
       cursor: {
