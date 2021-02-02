@@ -6,7 +6,7 @@
   import FlowerVisualization from '../components/landing/flower-visualization.svelte';
   import Typography from '../components/typography.svelte';
   import { ORGANIZERS, KEY_TOPICS } from '../constants/filter';
-  import type movements from '../assets/data/event_all.csv';
+  import movements from '../assets/data/event_all.csv';
   import MovementDialog from '../components/landing/movement-dialog.svelte';
   import InstructionDialog from '../components/landing/instruction-dialog.svelte';
   import InstructionButton from '../components/landing/instruction-button.svelte';
@@ -49,7 +49,7 @@
     <div class="mx-auto mt-4 md:mt-8 z-10 px-2 md:px-0 space-y-2">
       <div class="flex flex-row">
         <Typography as="h1" bold class="flex-1 md:text-center"
-          >651 เหตุการณ์</Typography
+          >{movements.length} เหตุการณ์</Typography
         >
         <InstructionButton
           class="md:hidden"
@@ -84,6 +84,7 @@
     </div>
 
     <FlowerVisualization
+      movementData={movements}
       {filter}
       on:movement-click={({ detail }) => {
         selectedMovement = detail;

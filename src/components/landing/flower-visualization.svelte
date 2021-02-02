@@ -2,7 +2,7 @@
   import { onMount, createEventDispatcher } from 'svelte';
 
   import { reshapeData, plot } from '../../utils/flower-d3';
-  import movements from '../../assets/data/event_all.csv';
+  import type movements from '../../assets/data/event_all.csv';
   import MovementTooltip from './movement-tooltip.svelte';
   import type { MovementNodeWithData } from './movement-tooltip.svelte';
 
@@ -17,6 +17,7 @@
     y: number;
   }
 
+  export let movementData: typeof movements;
   export let filter: Filter;
 
   let stage: SVGSVGElement;
@@ -26,7 +27,7 @@
   const dispatch = createEventDispatcher();
 
   const getMovementFromId = (id: string) =>
-    movements.find(({ event_no }) => event_no === id);
+    movementData.find(({ event_no }) => event_no === id);
 
   const onMouseOverNode = ({ x, y, id }: EventNode): void => {
     const offsetLeft = Math.round(x + stage.clientWidth / 2);
@@ -50,7 +51,7 @@
 
   const onTransitionCompleted = () => dispatch('transition-complete');
 
-  const reshapedMovements = reshapeData(movements);
+  const reshapedMovements = reshapeData(movementData);
 
   onMount(() => {
     onFilterChange = plot(
