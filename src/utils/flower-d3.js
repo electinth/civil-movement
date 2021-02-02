@@ -21,13 +21,17 @@ export const reshapeData = (data) => {
         y_mobile,
         pre_event,
         reaction_type,
+        key_topic,
       }) => {
         const id = event_no;
+
+        // typeof key_topic === 'number' ? [key_topic] : key_topic.split(',').map()
 
         let node = {
           id: event_no,
           date,
           type: player,
+          key_topic,
           time_show,
           x_desktop,
           x_mobile,
@@ -287,7 +291,7 @@ export function plot(
     .on('mouseout', mouseout)
     .on('click', (_, d) => mode === 'desktop' && onClickNode(d));
 
-  const delay = (d, i) => i * 15;
+  const delay = (_, i) => i * 15;
   link
     .attr('opacity', 0)
     .transition()
@@ -303,16 +307,17 @@ export function plot(
 
   let pendingNodeAnimation = node.size();
 
+  const onNodeAnimationEnd = () =>
+    pendingNodeAnimation > 1
+      ? pendingNodeAnimation--
+      : onNodeTransitionCompleted();
+
   node
     .transition()
     .delay(delay)
     .duration(1500)
     .attr('r', node_radius)
-    .on('end', () =>
-      pendingNodeAnimation > 1
-        ? pendingNodeAnimation--
-        : onNodeTransitionCompleted()
-    );
+    .on('end', onNodeAnimationEnd);
 
   const d_arrow = (d) =>
     `M${bound_x(d.source.x)},${bound_y(d.source.y)} L${bound_x(
@@ -333,7 +338,11 @@ export function plot(
 
   const onFilterChange = ({ organizers, keyTopics }) => {
     const satifiedNodes = rawNodes
-      .filter(({ type }) => organizers.includes(type))
+      .filter(
+        ({ type, key_topic }) =>
+          organizers.includes(type) &&
+          keyTopics.some((topic) => key_topic.includes(topic))
+      )
       .map(({ id }) => id);
 
     const applyNodeFill = (d) =>

@@ -9,7 +9,7 @@ declare module '*/event_all.csv' {
     location: string;
     cause: string;
     proposal: string;
-    key_topic: number;
+    key_topic: number[];
     time_show: number;
     x_desktop: number;
     y_desktop: number;
