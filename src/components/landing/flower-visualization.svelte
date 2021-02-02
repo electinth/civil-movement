@@ -7,8 +7,8 @@
   import type { MovementNodeWithData } from './movement-tooltip.svelte';
 
   interface Filter {
-    organizers: string[];
-    keyTopics: string[];
+    organizers: number[];
+    keyTopics: number[];
   }
 
   interface EventNode {

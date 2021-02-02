@@ -7,13 +7,13 @@
   import FilterOption from './filter-option.svelte';
 
   export let filter: Filter[];
-  export let activeFilter: string[];
+  export let activeFilter: number[];
   export let selectedAllLabel: string;
   export let selectedNoneLabel: string;
 
   let isOpen = false;
 
-  function toggleOption(optionKey: string): void {
+  function toggleOption(optionKey: number): void {
     activeFilter = activeFilter.includes(optionKey)
       ? activeFilter.filter((key) => key !== optionKey)
       : filter
