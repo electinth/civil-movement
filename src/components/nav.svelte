@@ -1,10 +1,12 @@
 <script lang="ts">
   import Typography from './typography.svelte';
 
+  export let activePath: string | undefined;
+
   const routes = [
-    { label: 'Explore', href: './' },
-    { label: 'Summary', href: './summary' },
-    { label: 'About', href: './about' },
+    { label: 'Explore', path: '' },
+    { label: 'Summary', path: 'summary' },
+    { label: 'About', path: 'about' },
   ];
 </script>
 
@@ -20,13 +22,17 @@
     </a>
   </div>
   <div class="flex-1 flex justify-end space-x-1 md:space-x-4">
-    {#each routes as { href, label }}
+    {#each routes as { path, label }}
       <a
-        {href}
+        href="./{path}"
         alt={label}
-        class="my-auto px-2 py-1 rounded-full hover:bg-gray hover:text-white"
+        class="my-auto px-2 py-1 rounded-full {path === activePath
+          ? ''
+          : 'hover:bg-gray hover:text-white'}"
       >
-        <Typography as="subtitle5" bold>{label}</Typography>
+        <Typography as="subtitle5" bold={path === activePath}
+          >{label}</Typography
+        >
       </a>
     {/each}
   </div>
