@@ -22,7 +22,7 @@
   }
 </script>
 
-<div use:clickOutside={() => (isOpen = false)} class="w-28 md:w-36 my-auto">
+<div use:clickOutside={() => (isOpen = false)} class="w-32 md:w-40 my-auto">
   <button
     on:click={() => (isOpen = !isOpen)}
     class={`flex flex-row px-2 py-1 space-x-2 rounded focus:outline-none w-full ${
