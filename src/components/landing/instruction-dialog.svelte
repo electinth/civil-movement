@@ -6,10 +6,10 @@
   import Typography from '../typography.svelte';
 
   const organizerSymbols = [
-    { label: 'เยาวชน (15-24 ปี)', image: '/images/player-01.png' },
-    { label: 'ประชาชน', image: '/images/player-02.png' },
-    { label: 'พรรคการเมือง', image: '/images/player-03.png' },
-    { label: 'รัฐบาล', image: '/images/player-04.png' },
+    { label: 'เยาวชน (15-24 ปี)', image: 'images/player-01.png' },
+    { label: 'ประชาชน', image: 'images/player-02.png' },
+    { label: 'พรรคการเมือง', image: 'images/player-03.png' },
+    { label: 'รัฐบาล', image: 'images/player-04.png' },
   ];
 
   const dispatch = createEventDispatcher();
@@ -62,7 +62,7 @@
             เส้น = ความสัมพันธ์กับเหตุการณ์ก่อนหน้า
           </Typography>
           <img
-            src="/images/instruction-relationship.png"
+            src="images/instruction-relationship.png"
             alt="ความสัมพันธ์"
             class="mx-auto"
           />
@@ -75,7 +75,7 @@
         <Typography as="body2" bold class="my-auto">
           สามารถเลือกดูเหตุการณ์ได้ตามผู้ดำเนินการ ข้อเรียกร้อง และช่วงเวลา
         </Typography>
-        <img src="/images/instruction-timeline.png" alt="Timeline" />
+        <img src="images/instruction-timeline.png" alt="Timeline" />
       </div>
     </div>
   </div>

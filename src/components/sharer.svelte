@@ -19,17 +19,17 @@
     socialLinks = [
       {
         service: 'Facebook',
-        icon: '/images/social-facebook.svg',
+        icon: 'images/social-facebook.svg',
         href: `http://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
       },
       {
         service: 'Twitter',
-        icon: '/images/social-twitter.svg',
+        icon: 'images/social-twitter.svg',
         href: `https://twitter.com/intent/tweet?url=${encodedUrl}`,
       },
       {
         service: 'Line',
-        icon: '/images/social-line.svg',
+        icon: 'images/social-line.svg',
         href: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`,
       },
     ];
