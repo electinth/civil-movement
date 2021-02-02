@@ -1,16 +1,16 @@
 export interface Filter {
-  key: string;
+  key: number;
   label: string;
   mainColor?: string;
   accentColor?: string;
 }
 
 export const ORGANIZERS: Filter[] = [
-  { key: 'youth', label: 'เยาวชน', mainColor: '#FFFFFF' },
-  { key: 'civil', label: 'ประชาชน', mainColor: '#C1B1F0' },
-  { key: 'party', label: 'พรรคการเมือง', mainColor: '#FF7A00' },
+  { key: 1, label: 'เยาวชน', mainColor: '#FFFFFF' },
+  { key: 2, label: 'ประชาชน', mainColor: '#C1B1F0' },
+  { key: 3, label: 'พรรคการเมือง', mainColor: '#FF7A00' },
   {
-    key: 'government',
+    key: 4,
     label: 'ภาครัฐและอื่นๆ',
     mainColor: '#1A171B',
     accentColor: '#FFFFFF',
@@ -18,10 +18,10 @@ export const ORGANIZERS: Filter[] = [
 ];
 
 export const KEY_TOPICS: Filter[] = [
-  { key: 'justice', label: 'ความยุติธรรม' },
-  { key: 'government', label: 'ขับไล่รัฐบาล' },
-  { key: 'constitution', label: 'รัฐธรรมนูญ' },
-  { key: 'reform_monarchy', label: 'ปฏิรูปสถาบัน' },
-  { key: 'protect_monarchy', label: 'ปกป้องสถาบัน' },
-  { key: 'other', label: 'อื่นๆ' },
+  { key: 1, label: 'ความยุติธรรม' },
+  { key: 2, label: 'ขับไล่รัฐบาล' },
+  { key: 3, label: 'แก้รัฐธรรมนูญ' },
+  { key: 4, label: 'ปฏิรูปสถาบัน' },
+  { key: 5, label: 'ปกป้องสถาบัน' },
+  { key: 6, label: 'อื่นๆ' },
 ];

@@ -19,17 +19,17 @@
     socialLinks = [
       {
         service: 'Facebook',
-        icon: '/images/social-facebook.svg',
+        icon: 'images/social-facebook.svg',
         href: `http://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
       },
       {
         service: 'Twitter',
-        icon: '/images/social-twitter.svg',
+        icon: 'images/social-twitter.svg',
         href: `https://twitter.com/intent/tweet?url=${encodedUrl}`,
       },
       {
         service: 'Line',
-        icon: '/images/social-line.svg',
+        icon: 'images/social-line.svg',
         href: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`,
       },
     ];
@@ -51,7 +51,7 @@
         <img
           src={icon}
           alt={service}
-          class="h-8 {light ? 'opacity-50 hover:opacity-100' : ''}"
+          class="h-8 {light ? 'opacity-80 hover:opacity-100' : ''}"
           style={light ? '' : 'filter: brightness(0); '}
         />
       </a>

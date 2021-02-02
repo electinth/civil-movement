@@ -7,13 +7,13 @@
   import FilterOption from './filter-option.svelte';
 
   export let filter: Filter[];
-  export let activeFilter: string[];
+  export let activeFilter: number[];
   export let selectedAllLabel: string;
   export let selectedNoneLabel: string;
 
   let isOpen = false;
 
-  function toggleOption(optionKey: string): void {
+  function toggleOption(optionKey: number): void {
     activeFilter = activeFilter.includes(optionKey)
       ? activeFilter.filter((key) => key !== optionKey)
       : filter
@@ -22,7 +22,7 @@
   }
 </script>
 
-<div use:clickOutside={() => (isOpen = false)} class="w-28 md:w-36 my-auto">
+<div use:clickOutside={() => (isOpen = false)} class="w-32 md:w-40 my-auto">
   <button
     on:click={() => (isOpen = !isOpen)}
     class={`flex flex-row px-2 py-1 space-x-2 rounded focus:outline-none w-full ${

@@ -6,10 +6,10 @@
 
   import movements from '../assets/data/event_all.csv';
   import formatMovementData from '../utils/formatMovementToLinedata';
-  import TopicOrderedList from '../components/summary/TopicOrderedList.svelte';
+  import TopicOrderedList from '../components/summary/topic-ordered-list.svelte';
   import Topic from '../components/summary/topic.svelte';
-  import TopicHead from '../components/summary/TopicHead.svelte';
-  import TopicParagraph from '../components/summary/TopicParagraph.svelte';
+  import TopicHead from '../components/summary/topic-head.svelte';
+  import TopicParagraph from '../components/summary/topic-paragraph.svelte';
   import SummaryTimeline from '../components/summary/summary-timeline.svelte';
 
   const linedata = formatMovementData(movements);

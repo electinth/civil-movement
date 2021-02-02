@@ -5,6 +5,8 @@ const parseThaiDate = (str) => {
   return new Date(+dmy[2] - 543, +dmy[1] - 1, +dmy[0]);
 };
 
+const parseArrayOfNumber = (str) => str.split(',').map((topic) => +topic);
+
 export const parseCsv = () =>
   dsv({
     processRow: (row) => {
@@ -13,6 +15,8 @@ export const parseCsv = () =>
         row[key] =
           key === 'date'
             ? parseThaiDate(value)
+            : key === 'key_topic'
+            ? parseArrayOfNumber(value)
             : isNaN(+value)
             ? value.trim()
             : +value;
