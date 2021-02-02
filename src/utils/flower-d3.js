@@ -25,10 +25,8 @@ export const reshapeData = (data) => {
       }) => {
         const id = event_no;
 
-        // typeof key_topic === 'number' ? [key_topic] : key_topic.split(',').map()
-
         let node = {
-          id: event_no,
+          id,
           date,
           type: player,
           key_topic,
@@ -81,6 +79,7 @@ export function plot(
 
   let simulation;
   let dragging = false;
+  let filterSatisfiedNodes = [];
 
   const drag = () => {
     function dragstarted(event, d) {
@@ -246,8 +245,32 @@ export function plot(
   const link_marker_muted = (d) =>
     `url(${new URL(`#arrow-${d.type}-muted`, location.toString())})`;
   const node_color_muted = (d) => color_player_muted(d.type);
+
+  const applyNodeCurserPointer = (d) => filterSatisfiedNodes.includes(d.id);
+  const applyNodeFill = (d) =>
+    (filterSatisfiedNodes.includes(d.id) ? node_color : node_color_muted)(d);
+  const applyStemStroke = (d) =>
+    (filterSatisfiedNodes.includes(d.target.id)
+      ? node_color
+      : node_color_muted)(d);
+  const applyLinkStroke = (d) =>
+    (filterSatisfiedNodes.includes(d.target.id)
+      ? link_stroke
+      : link_stroke_muted)(d);
+  const applyLinkMarker = (d) =>
+    (filterSatisfiedNodes.includes(d.target.id)
+      ? link_marker
+      : link_marker_muted)(d);
+  const updateObjectStateToMatchFilter = () => {
+    node
+      .attr('fill', applyNodeFill)
+      .classed('cursor-pointer', applyNodeCurserPointer);
+    stem.attr('stroke', applyStemStroke);
+    link.attr('stroke', applyLinkStroke).attr('marker-end', applyLinkMarker);
+  };
+
   const mouseover = (event, d) => {
-    if (mode === 'mobile') {
+    if (mode === 'mobile' || !filterSatisfiedNodes.includes(d.id)) {
       return;
     }
 
@@ -265,13 +288,19 @@ export function plot(
 
     onMouseOverNode(d);
   };
-  const mouseout = (event, d) => {
-    if (!dragging) {
-      link.attr('stroke', link_stroke).attr('marker-end', link_marker);
-      stem.attr('stroke', node_color).attr('display', stem_display);
-      node.attr('fill', node_color);
+  const mouseout = (_, d) => {
+    if (dragging || !filterSatisfiedNodes.includes(d.id)) {
+      return;
+    }
 
-      onMouseOutOfNode(d);
+    updateObjectStateToMatchFilter();
+    stem.attr('display', stem_display);
+
+    onMouseOutOfNode(d);
+  };
+  const mouseclick = (_, d) => {
+    if (mode === 'desktop' && filterSatisfiedNodes.includes(d.id)) {
+      onClickNode(d);
     }
   };
   const cx = (d) => bound_x(d.x);
@@ -282,14 +311,13 @@ export function plot(
     .data(nodes)
     .join('circle')
     .classed('node', true)
-    .classed('cursor-pointer', true)
     .attr('fill', node_color)
     .attr('cx', cx)
     .attr('cy', cy)
     .call(drag())
     .on('mouseover', mouseover)
     .on('mouseout', mouseout)
-    .on('click', (_, d) => mode === 'desktop' && onClickNode(d));
+    .on('click', mouseclick);
 
   const delay = (_, i) => i * 15;
   link
@@ -337,7 +365,7 @@ export function plot(
   });
 
   const onFilterChange = ({ organizers, keyTopics }) => {
-    const satifiedNodes = rawNodes
+    filterSatisfiedNodes = rawNodes
       .filter(
         ({ type, key_topic }) =>
           organizers.includes(type) &&
@@ -345,22 +373,7 @@ export function plot(
       )
       .map(({ id }) => id);
 
-    const applyNodeFill = (d) =>
-      (satifiedNodes.includes(d.id) ? node_color : node_color_muted)(d);
-    const applyStemStroke = (d) =>
-      (satifiedNodes.includes(d.target.id) ? node_color : node_color_muted)(d);
-    const applyLinkStroke = (d) =>
-      (satifiedNodes.includes(d.target.id) ? link_stroke : link_stroke_muted)(
-        d
-      );
-    const applyLinkMarker = (d) =>
-      (satifiedNodes.includes(d.target.id) ? link_marker : link_marker_muted)(
-        d
-      );
-
-    node.attr('fill', applyNodeFill);
-    stem.attr('stroke', applyStemStroke);
-    link.attr('stroke', applyLinkStroke).attr('marker-end', applyLinkMarker);
+    updateObjectStateToMatchFilter();
   };
 
   return onFilterChange;
