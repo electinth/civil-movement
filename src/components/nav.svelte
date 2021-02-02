@@ -2,20 +2,20 @@
   import Typography from './typography.svelte';
 
   const routes = [
-    { label: 'Explore', href: '/' },
-    { label: 'Summary', href: '/summary' },
-    { label: 'About', href: '/about' },
+    { label: 'Explore', href: './' },
+    { label: 'Summary', href: './summary' },
+    { label: 'About', href: './about' },
   ];
 </script>
 
 <div class="flex flex-row px-3 bg-white h-10 md:h-12 z-10">
   <div class="md:flex-1 flex">
-    <a href="/" class="h-4 md:h-5 my-auto">
+    <a href="./" class="h-4 md:h-5 my-auto">
       <img src="images/logo-elect-header.svg" alt="ELECT" class="h-4 md:h-5" />
     </a>
   </div>
   <div class="hidden md:flex">
-    <a href="/" class="my-auto flex">
+    <a href="./" class="my-auto flex">
       <Typography as="h3">CIVIL MOVEMENT 2020</Typography>
     </a>
   </div>
