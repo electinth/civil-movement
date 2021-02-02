@@ -28,7 +28,7 @@ export const reshapeData = (data) => {
           id: event_no,
           date,
           type: player,
-          time_show: time_show,
+          time_show,
           x_desktop,
           x_mobile,
           y_desktop,
@@ -331,9 +331,27 @@ export function plot(
     node.attr('cx', cx).attr('cy', cy);
   });
 
-  const onFilterChange = (filters) => {
-    // Logic to apply new filters
-    console.log('filter changed', filters);
+  const onFilterChange = ({ organizers, keyTopics }) => {
+    const satifiedNodes = rawNodes
+      .filter(({ type }) => organizers.includes(type))
+      .map(({ id }) => id);
+
+    const applyNodeFill = (d) =>
+      (satifiedNodes.includes(d.id) ? node_color : node_color_muted)(d);
+    const applyStemStroke = (d) =>
+      (satifiedNodes.includes(d.target.id) ? node_color : node_color_muted)(d);
+    const applyLinkStroke = (d) =>
+      (satifiedNodes.includes(d.target.id) ? link_stroke : link_stroke_muted)(
+        d
+      );
+    const applyLinkMarker = (d) =>
+      (satifiedNodes.includes(d.target.id) ? link_marker : link_marker_muted)(
+        d
+      );
+
+    node.attr('fill', applyNodeFill);
+    stem.attr('stroke', applyStemStroke);
+    link.attr('stroke', applyLinkStroke).attr('marker-end', applyLinkMarker);
   };
 
   return onFilterChange;
