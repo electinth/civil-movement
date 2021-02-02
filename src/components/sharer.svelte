@@ -51,7 +51,7 @@
         <img
           src={icon}
           alt={service}
-          class="h-8 {light ? 'opacity-50 hover:opacity-100' : ''}"
+          class="h-8 {light ? 'opacity-80 hover:opacity-100' : ''}"
           style={light ? '' : 'filter: brightness(0); '}
         />
       </a>
