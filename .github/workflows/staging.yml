@@ -14,7 +14,7 @@ jobs:
           node-version: '12'
       - run: yarn install
       - run: yarn build:css
-      - run: yarn build:export --basepath civil-movement
+      - run: yarn build:export
         env:
           BASE_PATH: civil-movement
       - uses: peaceiris/actions-gh-pages@v3
