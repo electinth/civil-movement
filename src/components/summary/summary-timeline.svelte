@@ -47,6 +47,17 @@
       by: 'people',
     },
   ];
+
+  function textColor(by) {
+    switch (by) {
+      case 'party':
+        return 'text-party';
+      case 'youth':
+        return 'text-youth';
+      case 'people':
+        return 'text-people';
+    }
+  }
 </script>
 
 <div class="w-full h-full relative">
@@ -87,7 +98,7 @@
               x2={X(d.end) - X(d.start)}
               stroke-width={2}
             />
-            <circle class="text-{d.by} fill-current" r={14} />
+            <circle class="{textColor(d.by)} fill-current" r={14} />
             <circle
               class="text-black fill-current"
               cx={X(d.end) - X(d.start)}
