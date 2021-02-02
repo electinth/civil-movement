@@ -21,6 +21,7 @@
 
   let stage: SVGSVGElement;
   let focusingNode: MovementNodeWithData;
+  let onFilterChange: (filter: Filter) => void;
 
   const dispatch = createEventDispatcher();
 
@@ -52,9 +53,8 @@
   const reshapedMovements = reshapeData(movements);
 
   onMount(() => {
-    plot(
+    onFilterChange = plot(
       reshapedMovements,
-      filter,
       stage,
       onMouseOverNode,
       onMouseOutOfNode,
@@ -62,6 +62,10 @@
       onTransitionCompleted
     );
   });
+
+  $: {
+    onFilterChange && onFilterChange(filter);
+  }
 </script>
 
 <div class="relative flex-1">

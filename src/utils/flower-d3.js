@@ -65,7 +65,6 @@ export const reshapeData = (data) => {
 
 export function plot(
   data,
-  filter,
   stageElement,
   onMouseOverNode,
   onMouseOutOfNode,
@@ -331,4 +330,11 @@ export function plot(
     stem.attr('d', d_stem);
     node.attr('cx', cx).attr('cy', cy);
   });
+
+  const onFilterChange = (filters) => {
+    // Logic to apply new filters
+    console.log('filter changed', filters);
+  };
+
+  return onFilterChange;
 }
