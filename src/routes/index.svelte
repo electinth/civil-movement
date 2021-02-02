@@ -41,12 +41,12 @@
 </svelte:head>
 
 <section class="relative flex flex-col">
-  <div class="absolute top-2 right-2">
+  <div class="hidden md:flex absolute top-2 right-2">
     <Sharer light vertical />
   </div>
 
   <div class="flex h-full flex-col bg-gradient-to-b from-mint-light to-mint">
-    <div class="mx-auto mt-4 md:mt-8 z-10 px-2 md:px-0">
+    <div class="mx-auto mt-4 md:mt-8 z-10 px-2 md:px-0 space-y-2">
       <div class="flex flex-row">
         <Typography as="h1" bold class="flex-1 md:text-center"
           >651 เหตุการณ์</Typography
@@ -75,6 +75,11 @@
           class="hidden md:block"
           on:click={() => (isInstructionOpen = true)}
         />
+      </div>
+      <div class="md:hidden">
+        <Typography as="subtitle5">
+          * ผลงานชิ้นนี้เหมาะกับการดูบนหน้าจอคอมพิวเตอร์
+        </Typography>
       </div>
     </div>
 
