@@ -1,6 +1,8 @@
 import * as d3 from 'd3';
 import * as d3ForceSampled from 'd3-force-sampled';
 
+export const dateDomain = [new Date(2019, 10, 1), new Date(2021, 0, 31)];
+
 export const reshapeData = (data) => {
   const node_sizes = {};
   const nodes = [];
@@ -122,10 +124,7 @@ export function plot(
     .scaleOrdinal(reaction_types, [`#7EEEE1`, `#C6D1C2`])
     .unknown(`#00ff00`);
 
-  const time_x = d3.scaleTime(
-    [new Date(2019, 6, 1), new Date(2021, 5, 30)],
-    [-width / 2, width / 2]
-  );
+  const time_x = d3.scaleTime(dateDomain, [-width / 2, width / 2]);
 
   const bound_x = (x, centered = true) =>
     Math.max(

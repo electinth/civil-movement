@@ -7,7 +7,7 @@
   // slider state
   let handleActivated = false,
     activeHandleIndex = 0;
-  let slider, width: number, height: number;
+  let slider, width: number;
 
   export let slide = true;
   export let X: ScaleTime<number, number, never>;
@@ -16,45 +16,17 @@
   $: ranges = [...Array(rangesItem.length).keys()];
   $: [min, max] = d3.extent(ranges);
   $: divider = (function () {
-    const ranges = rangesItem as Date[];
-
-    const monthyears = ranges.map(
+    const monthyears = rangesItem.map(
       (date) => `${date.getMonth()}-${date.getFullYear()}`
     );
 
-    const monthyear = [...new Set(monthyears)].reduce(
-      (divider, monthyear, curIdx, monthyears) => {
-        const [month, year] = monthyear.split('-');
-        const date = new Date(+year, +month, 1);
-        let label = `${thmonth[+month]}`;
-        if (curIdx <= 1) label = `${+year} ${label}`;
-
-        const nextMonthyear = monthyears[curIdx + 1];
-
-        const position = X(date);
-
-        let divWidth = width - position;
-        if (nextMonthyear) {
-          const [nextmonth, nextyear] = nextMonthyear.split('-'),
-            nextDate = new Date(+nextyear, +nextmonth);
-          const nextPosition = nextMonthyear ? X(nextDate) : X.range()[1];
-
-          divWidth = nextPosition - position;
-        }
-
-        const div = {
-          date,
-          label,
-          divWidth,
-          position,
-        };
-
-        return [...divider, div];
-      },
-      []
-    );
-
-    return monthyear;
+    return [...new Set(monthyears)].map((monthyear) => {
+      const [month, year] = monthyear.split('-');
+      return {
+        month: `${thmonth[+month]}`,
+        year,
+      };
+    });
   })();
 
   let values: [number, number];
@@ -63,7 +35,6 @@
 
   $: dateRange = [rangesItem[start], rangesItem[end]];
 
-  $: dividerSize = width / divider.length;
   $: stepSize = width / ranges.length;
   let step = 1;
 
@@ -81,11 +52,6 @@
     handleActivated = false;
 
     handleInteract(e);
-  }
-
-  function sliderBlurHandle(e: FocusEvent) {
-    console.log('--- slider blur handle ---');
-    console.log(e);
   }
 
   function moveHandle(index, value) {
@@ -110,24 +76,19 @@
 
   function bodyInteract(e: MouseEvent) {
     if (handleActivated) {
-      console.log('--- body interact ---');
       handleInteract(e);
     }
   }
 
   $: alignValueToStep = function (val: number): number {
     if (val <= min) {
-      console.log('alignValueToStep::val<min');
       return min;
     } else if (val >= max) {
-      console.log('alignValueToStep::val>max');
       return max;
     }
     let remainder = (val - min) % step;
     let aligned = val - remainder;
-    // console.log(
-    //   `alignValueToStep:: val=${val}, min=${min}, max=${max}, step=${step}, remainder=${remainder}, aligned=${aligned}`
-    // );
+
     if (Math.abs(remainder) * 2 >= step) {
       aligned += remainder > 0 ? step : -step;
     }
@@ -143,19 +104,23 @@
 
 <div
   id="rangeSlider"
-  class="w-full h-14 flex bg-white relative"
+  class="w-full h-14 flex bg-white"
   bind:clientWidth={width}
-  bind:clientHeight={height}
   bind:this={slider}
 >
-  {#each divider as { label, divWidth, position }}
-    <div
-      class="section text-center border-l-2 my-5 bg-white border-gray absolute whitespace-nowrap font-subtitle text-12"
-      style="left: {position}px; width: {divWidth}px;"
-    >
-      {label}
-    </div>
-  {/each}
+  <div class="w-full flex flex-row divide-x divide-gray py-2">
+    {#each divider as label, index}
+      <div
+        class="flex-1 flex flex-col justify-center text-center whitespace-nowrap font-subtitle text-12 h-full"
+      >
+        <div>{label.month}</div>
+        {#if index === 0 || divider[index - 1].year !== label.year}
+          <div>{label.year}</div>
+        {/if}
+      </div>
+    {/each}
+  </div>
+
   {#if slide}
     <div
       id="overlay"
@@ -170,7 +135,6 @@
         style="left: {stepSize * (value - 0.25)}px; width: {stepSize}px;"
         on:mousedown={sliderInteractStart}
         on:mouseup={sliderInteractEnd}
-        on:blur={sliderBlurHandle}
       >
         {#if handleActivated}
           <div
