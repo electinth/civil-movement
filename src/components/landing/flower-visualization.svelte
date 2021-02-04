@@ -9,6 +9,7 @@
   interface Filter {
     organizers: number[];
     keyTopics: number[];
+    dateRange: [Date, Date];
   }
 
   interface EventNode {

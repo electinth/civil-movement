@@ -364,12 +364,18 @@ export function plot(
     node.attr('cx', cx).attr('cy', cy);
   });
 
-  const onFilterChange = ({ organizers, keyTopics }) => {
+  const onFilterChange = ({
+    organizers,
+    keyTopics,
+    dateRange: [startDate, endDate],
+  }) => {
     filterSatisfiedNodes = rawNodes
       .filter(
-        ({ type, key_topic }) =>
+        ({ type, key_topic, date }) =>
           organizers.includes(type) &&
-          keyTopics.some((topic) => key_topic.includes(topic))
+          keyTopics.some((topic) => key_topic.includes(topic)) &&
+          date >= startDate &&
+          date <= endDate
       )
       .map(({ id }) => id);
 

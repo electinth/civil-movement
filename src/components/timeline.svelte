@@ -11,6 +11,7 @@
 
   export let slide = true;
   export let X: ScaleTime<number, number, never>;
+  export let dateRange: [Date, Date];
   $: rangesItem = X.ticks(d3.timeDay.every(1));
   $: ranges = [...Array(rangesItem.length).keys()];
   $: [min, max] = d3.extent(ranges);
@@ -56,9 +57,11 @@
     return monthyear;
   })();
 
-  export let values: [number, number];
+  let values: [number, number];
   $: values = [min, max];
   $: [start, end] = values;
+
+  $: dateRange = [rangesItem[start], rangesItem[end]];
 
   $: dividerSize = width / divider.length;
   $: stepSize = width / ranges.length;

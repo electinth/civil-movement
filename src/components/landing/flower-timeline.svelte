@@ -7,6 +7,8 @@
   import { max, scaleLinear, scaleTime } from 'd3';
   import * as d3 from 'd3';
 
+  export let dateRange: [Date, Date];
+
   const linedata = formatMovementData(movements);
   let width = 1000,
     lcHeight = 300,
@@ -18,8 +20,6 @@
     d3.max(linedata, (d) => d.x),
   ]);
   $: X = X.range([margin.left, width - margin.right]);
-
-  let values: [number, number] = [0, 0];
 </script>
 
 <div class="flex-1 relative" bind:clientWidth={width}>
@@ -30,5 +30,5 @@
   >
     <Linechart data={linedata} {Y} {X} />
   </div>
-  <Timeline bind:values {X} />
+  <Timeline {X} bind:dateRange />
 </div>

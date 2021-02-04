@@ -19,6 +19,7 @@
   const filter = {
     organizers: ORGANIZERS.map(({ key }) => key),
     keyTopics: KEY_TOPICS.map(({ key }) => key),
+    dateRange: [new Date(), new Date()] as [Date, Date],
   };
 
   let selectedMovement: typeof movements[number] = null;
@@ -105,7 +106,7 @@
     {/if}
   </div>
 
-  <FlowerTimeline />
+  <FlowerTimeline bind:dateRange={filter.dateRange} />
 </section>
 
 <style>
