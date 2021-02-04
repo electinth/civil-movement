@@ -17,6 +17,7 @@ jobs:
       - run: yarn build:export
         env:
           BASE_PATH: civil-movement
+          SITE_URL: https://electinth.github.io/civil-movement
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

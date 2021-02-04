@@ -16,6 +16,11 @@ const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
+const replacedEnvironmentVariable = {
+  'process.env.NODE_ENV': JSON.stringify(mode),
+  'process.env.SITE_URL': `'${process.env.SITE_URL}'`,
+};
+
 const onwarn = (warning, onwarn) =>
   (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
   (warning.code === 'CIRCULAR_DEPENDENCY' &&
@@ -30,7 +35,7 @@ export default {
     plugins: [
       replace({
         'process.browser': 'true',
-        'process.env.NODE_ENV': JSON.stringify(mode),
+        ...replacedEnvironmentVariable,
       }),
       svelte({
         preprocess: sveltePreprocess({ postcss: true }),
@@ -88,7 +93,7 @@ export default {
     plugins: [
       replace({
         'process.browser': 'false',
-        'process.env.NODE_ENV': JSON.stringify(mode),
+        ...replacedEnvironmentVariable,
       }),
       svelte({
         preprocess: sveltePreprocess({ postcss: true }),
@@ -122,7 +127,7 @@ export default {
       resolve(),
       replace({
         'process.browser': 'true',
-        'process.env.NODE_ENV': JSON.stringify(mode),
+        ...replacedEnvironmentVariable,
       }),
       commonjs(),
       typescript({ sourceMap: dev }),
