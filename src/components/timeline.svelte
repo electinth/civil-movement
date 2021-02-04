@@ -56,7 +56,8 @@
     return monthyear;
   })();
 
-  export let values = [0, 100];
+  export let values: [number, number];
+  $: values = [min, max];
   $: [start, end] = values;
 
   $: dividerSize = width / divider.length;
