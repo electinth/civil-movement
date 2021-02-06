@@ -12,6 +12,7 @@
   import TopicParagraph from '../components/summary/topic-paragraph.svelte';
   import SummaryTimeline from '../components/summary/summary-timeline.svelte';
   import Event from '../components/summary/event.svelte';
+  import { routes } from '../components/nav.svelte';
 
   const linedata = formatMovementData(movements);
   let width = 1024,
@@ -25,10 +26,12 @@
     .scaleTime()
     .domain([new Date(2019, 11, 1), d3.max(linedata, (d) => d.x)])
     .range([margin.left, width - margin.right]);
+
+  const explore = routes[0];
 </script>
 
 <div
-  class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-dark to-mint-light via-mint py-24"
+  class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-dark to-mint via-blue-light py-24"
 >
   <Typography as="h1" class="text-center text-white">
     สรุปภาพรวม<br />
@@ -187,4 +190,10 @@
   <Event graphics={'foreign'} sub>
     {`+ นอกจากนี้ยังมีชาวต่างชาติบางส่วนที่มี มุมมองสนับสนุนการเคลื่อนไหวของ ประชาชนในประเทศไทย ก็ได้ออกมาแสดง จุดยืนเช่นกัน เช่น กรณีของนายโจชัว หว่อง หรือกลุ่มสมาชิกวุฒิสภาแห่งประเทศ สหรัฐอเมริกา เป็นต้น`}
   </Event>
+  <a
+    href={explore.path}
+    class="my-60 w-80 h-14 rounded-full bg-white bg-opacity-50 flex justify-center items-center font-heading font-normal"
+  >
+    สำรวจเอง
+  </a>
 </div>

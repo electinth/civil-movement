@@ -1,13 +1,15 @@
-<script lang="ts">
-  import Typography from './typography.svelte';
-
-  export let activePath: string | undefined;
-
-  const routes = [
+<script context="module">
+  export const routes = [
     { label: 'Explore', path: '' },
     { label: 'Summary', path: 'summary' },
     { label: 'About', path: 'about' },
   ];
+</script>
+
+<script lang="ts">
+  import Typography from './typography.svelte';
+
+  export let activePath: string | undefined;
 </script>
 
 <div class="flex flex-row px-3 bg-white h-10 md:h-12 z-10">
