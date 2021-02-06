@@ -13,6 +13,7 @@
   import SummaryTimeline from '../components/summary/summary-timeline.svelte';
   import Event from '../components/summary/event.svelte';
   import { routes } from '../components/nav.svelte';
+  import Sharer from '../components/sharer.svelte';
 
   const linedata = formatMovementData(movements);
   let width = 1024,
@@ -192,8 +193,9 @@
   </Event>
   <a
     href={explore.path}
-    class="my-60 w-80 h-14 rounded-full bg-white bg-opacity-50 flex justify-center items-center font-heading font-normal"
+    class="my-40 w-80 h-14 rounded-full bg-white bg-opacity-50 flex justify-center items-center font-heading font-normal"
   >
     สำรวจเอง
   </a>
+  <Sharer />
 </div>
