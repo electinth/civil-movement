@@ -3,7 +3,8 @@
 
   export let graphics: string,
     title: string,
-    sub = false;
+    sub = false,
+    first = false;
 
   let src = `images/summary/${graphics}.svg`,
     alt = `${graphics}-diagram`;
@@ -11,7 +12,7 @@
 
 <div
   class="flex my-10 max-w-4xl w-full
-{sub ? '' : 'mt-80'}
+{first ? 'mt-28' : sub ? '' : 'mt-80'}
 {sub
     ? 'items-start'
     : 'items-center'}"

@@ -123,7 +123,7 @@
   <div
     class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-light to-mint-light"
   >
-    <div class="w-full max-w-5xl mb-48">
+    <div class="w-full max-w-5xl mb-96">
       <SummaryTimeline />
     </div>
   </div>
@@ -133,6 +133,7 @@
     <Event
       graphics={'flashmob'}
       title="แฟลชม็อบช่วงต้นปี (จากเหตุยุบพรรคอนาคตใหม่)"
+      first
     >
       {`
 ปฏิเสธไม่ได้ว่า การชงเรื่องของคณะกรรมการการเลือกตั้ง (กกต.) และคำวินิจฉัยของศาลรัฐธรรมนูญให้ยุบพรรค อนาคตใหม่ และตัดสิทธิ์กรรมการบริหารพรรค) ส่งผลต่อการ ออกมาแสดงพลังของประชาชน ซึ่งส่วนมากเป็นเยาวชน คนรุ่นใหม่ ในการเรียกร้องหาสิ่งสำคัญพื้นฐานที่สุดในสังคม นั่นคือ “ความยุติธรรม”
