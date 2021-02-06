@@ -121,14 +121,14 @@
     </Topic>
   </div>
   <div
-    class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-light to-mint"
+    class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-light to-mint-light"
   >
     <div class="w-full max-w-5xl mb-48">
       <SummaryTimeline />
     </div>
   </div>
   <div
-    class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-mint to-mint-light pb-24"
+    class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-mint-light to-mint pb-24"
   >
     <Event
       graphics={'flashmob'}
