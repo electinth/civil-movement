@@ -123,7 +123,7 @@
   <div
     class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-light to-mint"
   >
-    <div class="w-full max-w-5xl mb-96">
+    <div class="w-full max-w-5xl mb-48">
       <SummaryTimeline />
     </div>
   </div>
