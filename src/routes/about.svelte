@@ -2,6 +2,7 @@
   import Typography from '../components/typography.svelte';
   import sources from '../assets/data/sources.json';
   import Sharer from '../components/sharer.svelte';
+  import LinkExternal from '../components/link-external.svelte';
 </script>
 
 <div class="w-full bg-gradient-to-b from-white to-mint">
@@ -49,27 +50,17 @@
       <div class="space-y-1">
         <Typography as="body1" bold>1.เว็บไซต์</Typography>
         <ul>
-          {#each sources.website as link}
+          {#each sources.website as href}
             <li>
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="break-words hover:underline">{link}</a
-              >
+              <LinkExternal {href}>{href}</LinkExternal>
             </li>
           {/each}
         </ul>
         <Typography as="body1" bold>2.เพจ Facebook</Typography>
         <ul>
-          {#each sources.facebookPage as link}
+          {#each sources.facebookPage as href}
             <li>
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="break-words hover:underline">{link}</a
-              >
+              <LinkExternal {href}>{href}</LinkExternal>
             </li>
           {/each}
         </ul>
@@ -98,43 +89,46 @@
     <div class="space-y-4 md:space-y-6">
       <Typography as="h2" bold>อาสาสมัครร่วมพัฒนา</Typography>
       <div class="space-y-2">
-        <Typography as="body1" bold>เขียนโปรแกรม</Typography>
+        <Typography as="body1" bold>เขียนโปรแกรม 👩‍💻</Typography>
         <Typography as="body1">
-          dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley
+          <LinkExternal href="https://github.com/Th1nkK1D"
+            >Th1nkK1D</LinkExternal
+          >,
+          <LinkExternal href="https://github.com/thasarito"
+            >thasarito</LinkExternal
+          >,
+          <LinkExternal href="https://github.com/puripant"
+            >puripant</LinkExternal
+          >,
+          <LinkExternal href="https://github.com/rapee">rapee</LinkExternal>
         </Typography>
       </div>
       <div class="space-y-2">
-        <Typography as="body1" bold>ออกแบบ</Typography>
+        <Typography as="body1" bold>ออกแบบ 👩‍🎨</Typography>
         <Typography as="body1">
-          dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley
+          <LinkExternal href="https://www.instagram.com/namsaisupavong/"
+            >น้ำใส ศุภวงศ์</LinkExternal
+          >
         </Typography>
       </div>
       <div class="space-y-2">
-        <Typography as="body1" bold>สืบค้นและรวบรวมข้อมู</Typography>
+        <Typography as="body1" bold>สืบค้นและรวบรวมข้อมูล 🕵️‍♀️</Typography>
         <Typography as="body1">
-          dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley
+          ศุภิสรา อิศรานุกูล , สิทธิกานต์ ธีระวัฒนชัย
         </Typography>
       </div>
       <div class="space-y-2">
-        <Typography as="body1" bold>บรรณาธิการ</Typography>
-        <Typography as="body1">
-          dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley
-        </Typography>
+        <Typography as="body1" bold>บรรณาธิการ 👩‍🍳</Typography>
+        <Typography as="body1">ธนิสรา เรืองเดช</Typography>
       </div>
       <div class="space-y-2">
-        <Typography as="body1" bold>ประสานงานและจัดการอื่นๆ</Typography>
+        <Typography as="body1" bold>ประสานงานและจัดการอื่นๆ 🧙‍♀️</Typography>
         <Typography as="body1">
-          dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley
+          <LinkExternal href="https://punchup.world/">Punch Up</LinkExternal>,
+          <LinkExternal href="https://www.boonmeelab.com/"
+            >Boonmee Lab</LinkExternal
+          >,
+          <LinkExternal href="https://ilaw.or.th/">iLaw</LinkExternal>
         </Typography>
       </div>
     </div>
