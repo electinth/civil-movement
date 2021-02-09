@@ -100,6 +100,13 @@
       month = dt.getMonth();
     return `${date} ${thmonth[month]}`;
   }
+
+  function getTooltipTransformStyle(value): string {
+    const progressRatio = (value - min) / max;
+    return `transform: translate(${
+      progressRatio > 0.9 ? -100 : progressRatio < 0.1 ? 0 : -50
+    }%, -100%);`;
+  }
 </script>
 
 <div
@@ -139,7 +146,7 @@
         {#if handleActivated}
           <div
             class="absolute top-0 text-center bg-white p-1"
-            style="transform: translate(-50%, -100%);"
+            style={getTooltipTransformStyle(value)}
           >
             <Typography as="subtitle5" class="whitespace-nowrap"
               >{tooltipFormatter(rangesItem[value])}</Typography
