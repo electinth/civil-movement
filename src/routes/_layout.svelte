@@ -2,8 +2,10 @@
   import Nav from '../components/nav.svelte';
   import Footer from '../components/footer.svelte';
 
-  const siteName = 'Civil Movement';
-  const description = 'website description';
+  const siteName = 'Civil Movement 2020';
+  const siteTitle = '2020 ปีแห่งพลังของประชาชน';
+  const description =
+    'ปี 2020 (พ.ศ. 2563) ได้เกิดเหตุการณ์ที่ประชาชนไทยทั่วประเทศ ออกมาใช้สิทธิเสรีภาพตามรัฐธรรมนูญในการชุมนุมและแสดงความคิดเห็นทางการเมืองมากกว่า 650 ครั้ง';
   const siteUrl = process.env.SITE_URL;
 
   export let segment: string | undefined;
@@ -18,7 +20,7 @@
   <title>{fullTitle}</title>
   <meta property="description" value={description} />
   <meta property="og:url" content={siteUrl} />
-  <meta property="og:title" content={siteName} />
+  <meta property="og:title" content={siteTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content="{siteUrl}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
