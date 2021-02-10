@@ -50,7 +50,7 @@
       <div class="space-y-4">
         <div>
           <Typography as="body1" bold>1. เว็บไซต์</Typography>
-          <ul>
+          <ul class="grid md:grid-cols-2 list-inside list-disc">
             {#each sources.website as href}
               <li>
                 <LinkExternal {href}>{href}</LinkExternal>
@@ -60,7 +60,7 @@
         </div>
         <div>
           <Typography as="body1" bold>2. เพจ Facebook</Typography>
-          <ul>
+          <ul class="grid md:grid-cols-2 list-inside list-disc">
             {#each sources.facebookPage as href}
               <li>
                 <LinkExternal {href}>{href}</LinkExternal>
