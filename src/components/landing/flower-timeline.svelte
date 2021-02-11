@@ -21,8 +21,8 @@
 
 <div class="hidden md:flex flex-1 relative" bind:clientWidth={width}>
   <div
-    class="absolute w-full pointer-events-none"
-    style="transform: translate(0, -100%);"
+    class="absolute w-full pointer-events-none max-h-24"
+    style="transform: translate(0, -100%); background: linear-gradient(180deg, rgba(26, 23, 27, 0) 0%, rgba(26, 23, 27, 0.1) 100%);"
     bind:clientHeight={lcHeight}
   >
     <Linechart data={linedata} {Y} {X} />
