@@ -4,10 +4,9 @@
   import thmonth from '../utils/thmonth';
   import Typography from './typography.svelte';
 
-  // slider state
   let handleActivated = false,
     activeHandleIndex = 0;
-  let slider, width: number;
+  let width: number;
 
   export let slide = true;
   export let X: ScaleTime<number, number, never>;
@@ -101,20 +100,17 @@
     return `${date} ${thmonth[month]}`;
   }
 
-  function getTooltipTransformStyle(value): string {
+  function getTooltipTranslateY(value): string {
     const progressRatio = (value - min) / max;
-    return `transform: translate(${
-      progressRatio > 0.9 ? -100 : progressRatio < 0.1 ? 0 : -50
-    }%, -100%);`;
+    return progressRatio > 0.9
+      ? '-translate-x-full'
+      : progressRatio < 0.1
+      ? ''
+      : '-translate-x-1/2';
   }
 </script>
 
-<div
-  id="rangeSlider"
-  class="w-full h-14 flex bg-white"
-  bind:clientWidth={width}
-  bind:this={slider}
->
+<div class="relative w-full h-14 flex bg-white" bind:clientWidth={width}>
   <div class="w-full flex flex-row divide-x divide-gray py-4">
     {#each divider as label, index}
       <div
@@ -130,46 +126,51 @@
 
   {#if slide}
     <div
-      id="overlay"
       class="absolute bg-mint h-full opacity-25 pointer-events-none overflow-x-hidden"
       style="left: {stepSize * start}px; width: {stepSize *
         (end - start)}px; mix-blend-mode: multiply;"
     />
-    {#each values as value, index}
-      <div
-        class="absolute h-full w-0 flex flex-col"
-        style="left: {stepSize * (value - 0.25)}px;"
-      >
-        <svg
-          class="my-auto transform -translate-x-1/2"
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1.5 19.134C0.833333 19.5189 0.833334 20.4811 1.5 20.866L9 25.1962C9.66667 25.5811 10.5 25.0999 10.5 24.3301L10.5 15.6699C10.5 14.9001 9.66667 14.4189 9 14.8038L1.5 19.134Z"
-            fill="black"
-            stroke="white"
-          />
-          <path
-            d="M38.5 20.866C39.1667 20.4811 39.1667 19.5189 38.5 19.134L31 14.8038C30.3333 14.4189 29.5 14.9001 29.5 15.6699L29.5 24.3301C29.5 25.0999 30.3333 25.5811 31 25.1962L38.5 20.866Z"
-            fill="black"
-            stroke="white"
-          />
-          <rect x="10" y="19" width="20" height="2" fill="black" />
-          <rect x="10" y="18" width="20" height="1" fill="white" />
-          <rect x="10" y="21" width="20" height="1" fill="white" />
-          <rect
-            x="20"
-            width="40"
-            height="0.999997"
-            transform="rotate(90 20 0)"
-            fill="black"
-          />
-        </svg>
+    <div class="absolute inset-0">
+      <div class="relative h-full w-full overflow-x-hidden">
+        {#each values as value}
+          <div
+            class="absolute h-full w-0 flex flex-col"
+            style="left: {stepSize * (value - 0.25)}px;"
+          >
+            <svg
+              class="my-auto transform -translate-x-1/2"
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.5 19.134C0.833333 19.5189 0.833334 20.4811 1.5 20.866L9 25.1962C9.66667 25.5811 10.5 25.0999 10.5 24.3301L10.5 15.6699C10.5 14.9001 9.66667 14.4189 9 14.8038L1.5 19.134Z"
+                fill="black"
+                stroke="white"
+              />
+              <path
+                d="M38.5 20.866C39.1667 20.4811 39.1667 19.5189 38.5 19.134L31 14.8038C30.3333 14.4189 29.5 14.9001 29.5 15.6699L29.5 24.3301C29.5 25.0999 30.3333 25.5811 31 25.1962L38.5 20.866Z"
+                fill="black"
+                stroke="white"
+              />
+              <rect x="10" y="19" width="20" height="2" fill="black" />
+              <rect x="10" y="18" width="20" height="1" fill="white" />
+              <rect x="10" y="21" width="20" height="1" fill="white" />
+              <rect
+                x="20"
+                width="40"
+                height="0.999997"
+                transform="rotate(90 20 0)"
+                fill="black"
+              />
+            </svg>
+          </div>
+        {/each}
       </div>
+    </div>
+    {#each values as value, index}
       <div
         id="handle-{index}"
         class="absolute h-full cursor-handle"
@@ -179,8 +180,9 @@
       >
         {#if handleActivated}
           <div
-            class="absolute top-0 text-center bg-white p-1"
-            style={getTooltipTransformStyle(value)}
+            class="absolute top-0 text-center bg-white p-1 transform -translate-y-full {getTooltipTranslateY(
+              value
+            )}"
           >
             <Typography as="subtitle5" class="whitespace-nowrap"
               >{tooltipFormatter(rangesItem[value])}</Typography
