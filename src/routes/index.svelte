@@ -46,7 +46,7 @@
     <Sharer light vertical />
   </div>
 
-  <div class="flex h-full flex-col bg-gradient-to-b from-mint-light to-mint">
+  <div class="flex flex-1 flex-col bg-gradient-to-b from-mint-light to-mint">
     <div class="mx-auto mt-4 md:mt-8 z-10 px-2 md:px-0 space-y-2">
       <div class="flex flex-row">
         <Typography as="h1" bold class="flex-1 md:text-center"
