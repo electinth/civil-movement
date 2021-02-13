@@ -107,8 +107,8 @@ export function plot(
       .on('end', dragended);
   };
 
-  const node_radius = 5;
-  const link_length = 10;
+  const node_radius = mode === 'desktop' ? 5 : 2.5;
+  const link_length = mode === 'desktop' ? 10 : 5;
 
   const color_player = d3
     .scaleOrdinal(d3.range(1, 5), [`#FFFFFF`, `#C1B1F0`, `#FF7A00`, `#1A171B`])
