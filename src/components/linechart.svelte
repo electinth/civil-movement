@@ -26,8 +26,8 @@
 
   $: pathDef = line<TData>()
     .x((d) => X(d.x))
-    .y((d) => Y(d.y))
-    .curve(curveCatmullRom);
+    .y((d) => Y(d.y));
+  // .curve(curveCatmullRom);
 
   function snap(e) {
     console.log('snap');
