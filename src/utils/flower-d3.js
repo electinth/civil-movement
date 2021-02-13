@@ -10,7 +10,7 @@ export const reshapeData = (data) => {
   const stems = [];
 
   data
-    .sort((a, b) => a.date.getMilliseconds() - b.date.getMilliseconds())
+    .sort((a, b) => a.date - b.date)
     .forEach(
       ({
         date,
