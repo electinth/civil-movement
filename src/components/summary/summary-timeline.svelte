@@ -1,25 +1,8 @@
 <script lang="ts">
   import * as d3 from 'd3';
-
+  import { dateDomain } from '../../utils/flower-d3';
   import Timeline from '../timeline.svelte';
-  import movements from '../../assets/data/event_all.csv';
-  import formatMovementData from '../../utils/formatMovementToLinedata';
-  import { line } from 'd3';
-
-  let width = 1000,
-    height = 384,
-    margin = { top: 0, right: 0, bottom: 0, left: 0 };
-  const linedata = formatMovementData(movements);
-  let X = d3
-    .scaleTime()
-    .domain([new Date(2019, 11, 1), d3.max(linedata, (d) => d.x)]);
-  $: X = X.range([margin.left, width - margin.right]);
-  $: Y = d3
-    .scaleLinear()
-    .domain([0, data.length - 1])
-    .range([100, height - 75]);
-
-  $: console.log();
+  import Typography from '../typography.svelte';
 
   const data = [
     {
@@ -48,6 +31,31 @@
     },
   ];
 
+  let width = 1000,
+    height = 384,
+    margin = { top: 0, right: 10, bottom: 0, left: 10 };
+  $: X = d3
+    .scaleTime()
+    .domain(dateDomain)
+    .range([margin.left, width - margin.right]);
+  $: Y = d3
+    .scaleLinear()
+    .domain([0, data.length - 1])
+    .range([height * 0.2, height - 75]);
+
+  $: events = data.map(({ start, end, ...other }, index) => {
+    const xStart = X(start) || X(dateDomain[0]);
+    const xEnd = X(end) || X(dateDomain[1]);
+
+    return {
+      order: index + 1,
+      offsetY: Y(index),
+      offsetX: +xStart.toFixed(2),
+      width: +(xEnd - xStart).toFixed(2),
+      ...other,
+    };
+  });
+
   function textColor(by) {
     switch (by) {
       case 'party':
@@ -63,11 +71,11 @@
 <div class="w-full h-full relative">
   <Timeline {X} slide={false} />
   <div
-    class="absolute top-0 -right-8 w-8 h-14"
+    class="absolute top-0 -right-8 w-8 h-10 md:h-14"
     style="background: linear-gradient(to left, transparent, white);"
   />
   <div
-    class="absolute top-0 -left-8 w-8 h-14"
+    class="absolute top-0 -left-8 w-8 h-10 md:h-14"
     style="background: linear-gradient(to right, transparent, white);"
   />
   <div
@@ -76,48 +84,35 @@
     bind:clientWidth={width}
   >
     <svg class="w-full h-full">
-      {#each data as d, i}
-        <g transform={`translate(${X(d.start)}, 0)`}>
-          <!-- svelte-ignore component-name-lowercase -->
+      {#each events.reverse() as { order, offsetY, offsetX, width, by, label }}
+        <g transform="translate({offsetX}, 0)">
           <line
-            y2={Y(i)}
+            y2={offsetY}
             class="text-white stroke-current"
             stroke-dasharray="3, 3"
           />
-          <!-- svelte-ignore component-name-lowercase -->
           <line
             class="text-white stroke-current"
-            transform={`translate(${X(d.end) - X(d.start)}, 0)`}
-            y2={Y(i)}
+            transform="translate({width}, 0)"
+            y2={offsetY}
             stroke-dasharray="3, 3"
           />
-          <g transform={`translate(0, ${Y(i)})`}>
-            <!-- svelte-ignore component-name-lowercase -->
+          <g transform="translate(0, {offsetY})">
             <line
               class="text-black stroke-current"
-              x2={X(d.end) - X(d.start)}
+              x2={width}
               stroke-width={2}
             />
-            <circle class="{textColor(d.by)} fill-current" r={14} />
-            <circle
-              class="text-black fill-current"
-              cx={X(d.end) - X(d.start)}
-              r={3}
-            />
+            <circle class="{textColor(by)} fill-current" r={14} />
+            <circle class="text-black fill-current" cx={width} r={3} />
             <text
               class="font-heading"
               dominant-baseline="central"
-              text-anchor="middle">{i + 1}</text
+              text-anchor="middle">{order}</text
             >
-            <foreignObject
-              x={-14}
-              y={20}
-              width={X(d.end) - X(d.start)}
-              height={50}
-            >
-              <div class="font-heading" style="width: 200px; height: 50px;">
-                {d.label}
-              </div>
+            <foreignObject x={-14} y={20} {width} class="h-24">
+              <Typography as="h4" class="w-full break-words">{label}</Typography
+              >
             </foreignObject>
           </g>
         </g>

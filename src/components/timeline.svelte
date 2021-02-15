@@ -21,9 +21,17 @@
 
     return [...new Set(monthyears)].map((monthyear) => {
       const [month, year] = monthyear.split('-');
+      const monthString = `${+month + 1}`;
+
       return {
-        month: `${thmonth[+month]}`,
-        year,
+        full: {
+          month: `${thmonth[+month]}`,
+          year,
+        },
+        short: {
+          month: `0${monthString}`.slice(monthString.length - 1),
+          year: `'${year.slice(2)}`,
+        },
       };
     });
   })();
@@ -110,16 +118,27 @@
   }
 </script>
 
-<div class="relative w-full h-14 flex bg-white" bind:clientWidth={width}>
-  <div class="w-full flex flex-row divide-x divide-gray py-4">
-    {#each divider as label, index}
+<div
+  class="relative w-full h-10 md:h-14 flex bg-white"
+  bind:clientWidth={width}
+>
+  <div class="w-full flex flex-row divide-x divide-gray py-1 md:py-4">
+    {#each divider as { full, short }, index}
       <div
         class="flex-1 flex flex-col justify-center text-center whitespace-nowrap font-subtitle text-12 h-full"
       >
-        <div>{label.month}</div>
-        {#if index === 0 || divider[index - 1].year !== label.year}
-          <div>{label.year}</div>
-        {/if}
+        <div class="flex flex-col md:flex-row m-auto md:space-x-1">
+          {#if index === 0 || divider[index - 1].full.year !== full.year}
+            <Typography as="subtitle5" bold>
+              <span class="md:hidden">{short.year}</span>
+              <span class="hidden md:block">{full.year}</span>
+            </Typography>
+          {/if}
+          <Typography as="subtitle5">
+            <div class="md:hidden">{short.month}</div>
+            <div class="hidden md:block">{full.month}</div>
+          </Typography>
+        </div>
       </div>
     {/each}
   </div>

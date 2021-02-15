@@ -128,7 +128,7 @@
   <div
     class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-light to-mint-light overflow-x-hidden"
   >
-    <div class="w-full max-w-5xl mb-96 px-2">
+    <div class="w-full max-w-5xl mb-96">
       <SummaryTimeline />
     </div>
   </div>
