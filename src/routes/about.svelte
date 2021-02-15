@@ -107,9 +107,7 @@
           >,
           <LinkExternal href="https://github.com/puripant"
             >puripant</LinkExternal
-          > และ <LinkExternal href="https://github.com/rapee"
-            >rapee</LinkExternal
-          >
+          >, <LinkExternal href="https://github.com/rapee">rapee</LinkExternal>
         </Typography>
       </div>
       <div class="space-y-2">
@@ -123,7 +121,7 @@
       <div class="space-y-2">
         <Typography as="body1" bold>สืบค้นและรวบรวมข้อมูล 🕵️‍♀️</Typography>
         <Typography as="body1">
-          ศุภิสรา อิศรานุกูล และสิทธิกานต์ ธีระวัฒนชัย
+          ศุภิสรา อิศรานุกูล, สิทธิกานต์ ธีระวัฒนชัย
         </Typography>
       </div>
       <div class="space-y-2">
@@ -136,8 +134,7 @@
           <LinkExternal href="https://punchup.world/">Punch Up</LinkExternal>,
           <LinkExternal href="https://www.boonmeelab.com/"
             >Boonmee Lab</LinkExternal
-          >
-          และ <LinkExternal href="https://ilaw.or.th/">iLaw</LinkExternal>
+          >, <LinkExternal href="https://ilaw.or.th/">iLaw</LinkExternal>
         </Typography>
       </div>
     </div>
