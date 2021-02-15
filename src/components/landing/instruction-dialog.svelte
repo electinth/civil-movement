@@ -75,7 +75,11 @@
         <Typography as="body2" bold class="my-auto">
           สามารถเลือกดูเหตุการณ์ได้ตามผู้ดำเนินการ ข้อเรียกร้อง และช่วงเวลา
         </Typography>
-        <img src="images/instruction-timeline.png" alt="Timeline" />
+        <img
+          src="images/instruction-timeline.png"
+          alt="Timeline"
+          class="mx-auto"
+        />
       </div>
     </div>
   </div>
