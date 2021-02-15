@@ -18,7 +18,10 @@ const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const replacedEnvironmentVariable = {
   'process.env.NODE_ENV': JSON.stringify(mode),
-  'process.env.SITE_URL': `'${process.env.SITE_URL}'`,
+  'process.env.SITE_URL': process.env.SITE_URL
+    ? `'${process.env.SITE_URL}'`
+    : 'undefined',
+  'process.env.GTAG': process.env.GTAG ? `'${process.env.GTAG}'` : 'undefined',
 };
 
 const onwarn = (warning, onwarn) =>

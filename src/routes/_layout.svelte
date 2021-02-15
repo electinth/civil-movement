@@ -24,6 +24,22 @@
   <meta property="og:description" content={description} />
   <meta property="og:image" content="{siteUrl}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
+
+  {#if process.env.GTAG}
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id={process.env
+        .GTAG}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', process.env.GTAG);
+    </script>
+  {/if}
 </svelte:head>
 
 <div class="flex flex-col min-h-screen">
