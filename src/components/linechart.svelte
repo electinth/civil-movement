@@ -1,13 +1,5 @@
 <script lang="ts">
-  import {
-    bisect,
-    curveCatmullRom,
-    line,
-    scaleLinear,
-    scaleTime,
-    ticks,
-    timeParse,
-  } from 'd3';
+  import { bisect, line, scaleLinear, scaleTime } from 'd3';
   import type { ScaleLinear, ScaleTime } from 'd3';
   import type { TData } from '../utils/formatMovementToLinedata';
   import thmonth from '../utils/thmonth';
@@ -27,10 +19,8 @@
   $: pathDef = line<TData>()
     .x((d) => X(d.x))
     .y((d) => Y(d.y));
-  // .curve(curveCatmullRom);
 
   function snap(e) {
-    console.log('snap');
     const xPos = e.offsetX;
     const domain = data.map((d) => d.x);
     const step = (X.range()[1] - X.range()[0]) / domain.length;
