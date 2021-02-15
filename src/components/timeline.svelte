@@ -45,7 +45,7 @@
   $: stepSize = width / ranges.length;
   let step = 1;
 
-  function sliderInteractStart(e: MouseEvent) {
+  function sliderInteractStart(e: MouseEvent | TouchEvent) {
     e.preventDefault();
 
     handleActivated = true;
@@ -55,7 +55,7 @@
     handleInteract(e);
   }
 
-  function sliderInteractEnd(e: MouseEvent) {
+  function sliderInteractEnd(e: MouseEvent | TouchEvent) {
     handleActivated = false;
 
     handleInteract(e);
@@ -70,12 +70,12 @@
     }
   }
 
-  function bodyMouseUp(e: MouseEvent) {
+  function bodyMouseUp() {
     handleActivated = false;
   }
 
-  function handleInteract({ clientX }: { clientX: number }) {
-    let position = clientX;
+  function handleInteract(e) {
+    let position = e.clientX || e.touches[0]?.clientX;
     let ratio = position / width;
     let newValue = min + (max - min) * ratio;
     moveHandle(activeHandleIndex, newValue);
@@ -196,6 +196,7 @@
         style="left: {stepSize * (value - 0.25)}px; width: {stepSize}px;"
         on:mousedown={sliderInteractStart}
         on:mouseup={sliderInteractEnd}
+        on:touchmove={sliderInteractStart}
       >
         {#if handleActivated}
           <div
