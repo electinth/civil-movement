@@ -7,7 +7,7 @@
 
 <div class="w-full bg-gradient-to-b from-white to-mint">
   <div
-    class="flex flex-col space-y-8 md:space-y-12 px-3 py-12 md:py-24 w-full max-w-4xl mx-auto"
+    class="flex flex-col space-y-8 md:space-y-12 px-4 py-12 md:py-24 w-full max-w-4xl mx-auto"
   >
     <Typography as="h1" bold class="mx-auto">เกี่ยวกับโครงการ</Typography>
 
@@ -62,7 +62,9 @@
           <Typography as="body1" bold>2. เพจ Facebook</Typography>
           <ul class="grid md:grid-cols-2 list-inside list-disc">
             {#each sources.facebookPage as href}
-              <li>
+              <li
+                class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap"
+              >
                 <LinkExternal {href}>{href}</LinkExternal>
               </li>
             {/each}
