@@ -21,7 +21,7 @@
     .y((d) => Y(d.y));
 
   function snap(e) {
-    const xPos = e.offsetX;
+    const xPos = e.offsetX || e.touches[0].clientX;
     const domain = data.map((d) => d.x);
     const step = (X.range()[1] - X.range()[0]) / domain.length;
     const snapDate = domain[bisect(domain, X.invert(xPos - step / 2))];
@@ -29,7 +29,7 @@
   }
 </script>
 
-<div class="w-full h-full" on:mousemove={snap}>
+<div class="w-full h-full" on:mousemove={snap} on:touchmove={snap}>
   <svg class="h-full w-full">
     {#if axis}
       <!-- x - axis -->
