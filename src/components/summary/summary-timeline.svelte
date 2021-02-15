@@ -110,7 +110,7 @@
               dominant-baseline="central"
               text-anchor="middle">{order}</text
             >
-            <foreignObject x={-14} y={20} {width} class="h-24">
+            <foreignObject x={-14} y={20} {width} height={100}>
               <Typography as="h4" class="w-full break-words">{label}</Typography
               >
             </foreignObject>
