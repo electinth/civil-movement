@@ -75,7 +75,11 @@
   }
 
   function handleInteract(e) {
-    let position = e.clientX || e.touches[0]?.clientX;
+    if (!e.clientX && !e.touches) {
+      return;
+    }
+
+    let position = e.clientX || e.touches[0].clientX;
     let ratio = position / width;
     let newValue = min + (max - min) * ratio;
     moveHandle(activeHandleIndex, newValue);
@@ -151,10 +155,10 @@
     />
     <div class="absolute inset-0">
       <div class="relative h-full w-full overflow-x-hidden">
-        {#each values as value}
+        {#each values as value, index}
           <div
             class="absolute h-full w-0 flex flex-col"
-            style="left: {stepSize * (value - 0.25)}px;"
+            style="left: {stepSize * (value + 1 - index)}px;"
           >
             <svg
               class="my-auto transform -translate-x-1/2"
@@ -193,7 +197,7 @@
       <div
         id="handle-{index}"
         class="absolute h-full cursor-handle"
-        style="left: {stepSize * (value - 0.25)}px; width: {stepSize}px;"
+        style="left: {stepSize * (value + 1 - index)}px; width: {stepSize}px;"
         on:mousedown={sliderInteractStart}
         on:mouseup={sliderInteractEnd}
         on:touchmove={sliderInteractStart}
