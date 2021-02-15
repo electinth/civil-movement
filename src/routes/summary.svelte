@@ -33,7 +33,7 @@
 
 <div class="w-full h-full flex flex-col justify-center items-center">
   <div
-    class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-dark to-blue-light pt-24 px-2"
+    class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-blue-dark to-blue-light pt-24 px-4"
   >
     <Typography as="h1" bold class="text-center text-white">
       สรุปภาพรวม<br />

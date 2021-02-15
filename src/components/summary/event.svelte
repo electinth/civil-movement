@@ -1,8 +1,8 @@
 <script lang="ts">
   import Typography from '../typography.svelte';
 
-  export let graphics: string,
-    title: string,
+  export let graphics: string = '',
+    title: string = '',
     sub = false,
     first = false;
 
@@ -11,15 +11,16 @@
 </script>
 
 <div
-  class="flex my-10 max-w-4xl w-full
-{first ? 'mt-28' : sub ? '' : 'mt-80'}
-{sub
-    ? 'items-start'
-    : 'items-center'}"
+  class="flex flex-col md:flex-row my-6 md:my-10 max-w-5xl w-full space-y-6 md:space-y-0 md:space-x-8 px-4
+{first
+    ? 'mt-14 md:mt-48'
+    : sub
+    ? ''
+    : 'mt-16 md:mt-64'}"
 >
-  <div class="w-6/12 mr-auto {sub ? 'pl-28' : ''}">
+  <div class="md:w-6/12 {sub ? 'md:pl-28' : ''}">
     {#if !sub}
-      <Typography as="h2" bold class="mb-16">
+      <Typography as="h2" bold class="mb-4 md:mb-12">
         {title}
       </Typography>
     {/if}
@@ -27,9 +28,9 @@
       <slot />
     </Typography>
   </div>
-  <div class="w-5/12">
+  <div class="flex-1">
     {#if graphics}
-      <img {src} {alt} />
+      <img class="mx-auto" {src} {alt} />
     {/if}
   </div>
 </div>
