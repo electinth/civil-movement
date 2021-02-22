@@ -20,6 +20,14 @@ We build as a static
 2. Install dependency with `yarn` or `npm install`
 3. Run development server with `yarn dev` or `npm run dev`
 
+## Build
+
+Run `export` with config environment
+
+```bash
+BASE_PATH=<site_base_path> SITE_URL=<site_absolute_url> GTAG=G-<google_analytics_id> yarn export
+```
+
 ## Development Guideline
 
 ### File Structure
