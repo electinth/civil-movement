@@ -7,7 +7,7 @@ Civil movement in Thailand 2020
 We build as a static
 
 - Staging: https://electinth.github.io/civil-movement/
-- Production: Not deployed yet
+- Production: https://elect.in.th/civil-movement-2020/
 
 ## Tech stack
 
